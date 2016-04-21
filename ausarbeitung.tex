@@ -6,6 +6,12 @@
 \usepackage{ae}
 \usepackage[bookmarks,bookmarksnumbered]{hyperref}
 \usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage[usenames, dvipsnames]{color}
 
 \begin{document}
 
@@ -21,21 +27,19 @@
 \subsubsection{Primitivwurzel}
 \subsection{Diskretes Potenzieren}
 \subsection{Diskreter Logarithmus}
+
 \section{Algorithmen zur Bestimmung des diskreten Logarithmus}
-\subsection{Babystep-Giantstep Algorithmus}
-\subsubsection{Theorie}
-\subsubsection{Laufzeit}
-\subsubsection{Beispiel}
-\subsection{Pollard-Rho-Methode}
-\subsubsection{Theorie}
-\subsubsection{Laufzeit}
-\subsubsection{Beispiel}
+\input{algo_intro.tex}
+
+\subsection{Babystep"=Giantstep"=Algorithmus}
+\input{bsgs.tex}
+
 \section{Anwendungen in der Kryptographie}
-\subsection{Elgamal-Verschlüsselungsverfahren}
-\subsubsection{Beispiele}
-\subsubsection{Schwächen}
+
+\subsection{ElGamal"=Verschlüsselungsverfahren}
+\input{elgamal.tex}
+
 \subsection{Anwendungsbeispiel 2}
 \section{Ausblick}
 
 \end{document}
-

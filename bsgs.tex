@@ -1,0 +1,102 @@
+% Autor: Josef
+Der Babystep"=Giantstep"=Algorithmus dient der Berechnung des diskreten Logarithmus einzelner Elemente zyklischer Gruppen. Der Algorithmus ist dem einfachen ausprobieren überlegen, die Laufzeit wird aber, wie wir sehen werden, ebenfalls von der Ordnung der Gruppe bestimmt. Erfunden wurde dieser Algorithmus von Daniel Shanks.
+
+\subsubsection{Theorie}
+Gegeben sei eine zyklische Gruppe $\mathbb{G}$ der Ordnung $n$, ein Generator $g$ und ein Element der Gruppe welches wir mit $\alpha$ bezeichnen. Gesucht ist nun ein $x$, sodass $g^x=\alpha$ gilt. Diese Gleichung kann nun folgendermaßen umgeformt werden: Wir schreiben $x$ als $x=im+j$. Nun bietet es sich an, ein $m$ zu wählen, aus dem ähnlich große Zahlenbereiche für $i$ und $j$ resultieren. Aus der vorhergehenden Gleichung folgt, dass dies für $m := \big\lceil \sqrt{n} \big\rceil$ der Fall ist.
+Schließlich gilt $0 \leq i < m$ sowie $0 \leq j < m$. Nun kann folgende Umformung durchgeführt werden:
+
+\begin{equation}
+g^{im+j}\alpha
+\Leftrightarrow
+g^j = \alpha(g^{-m})^i
+\end{equation}
+
+Der Algorithmus betrachtet nun beide Seiten dieser Gleichung getrennt und teilt sich somit in zwei Phasen.
+In der ersten Phase werden alle $g^j$ berechnet und die jeweiligen Paare $(j, g^j)$, welche als "`baby steps"'
+bezeichnet werden, werden in einer Tabelle gespeichert. Anschließend werden die "`giant steps"' bestimmt, hierbei wird der Wert des Ausdrucks $(g^{-m})^i$ für alle $i$ mit $0 \leq i < m$ bestimmt und mit den Einträgen der Tabelle verglichen. Wird für ein $i$ ein Eintrag gefunden, der die Gleichung (1) erfüllt, wird $x$ mit $x=im+j$ ausgegeben.
+
+Für eine spätere Implementierung bietet es sich an, sich folgende Umformung zu nutze zu machen: $\alpha(g^{-m})^i = \alpha(g^{-m})^{i-1}g^{-m}$.
+Der Berechnungsaufwand kann hierdurch etwas reduziert werden, da das Ergebnis der aktuellen Iteration aus dem vorgehenden Schritt bestimmt werden kann. Das Potenzieren mit $i$ während der Iterationen kann somit entfallen.
+
+\subsubsection{Der Algorithmus in Pseudocode}
+\begin{tabbing}
+\textbf{Eingabe:}~~ \=Eine zyklische Gruppe $\mathbb{G}$ der Ordnung $n$ mit einem Generator $g$ und ein\\
+\>Element der Gruppe $\alpha$.\\
+\textbf{Ausgabe:} \>Der diskrete Logarithmus $x = log_g(\alpha)$
+\end{tabbing}
+
+\begin{enumerate}
+\item Setze $m := ceil(sqrt(n))$.
+\item Für alle $j \in \{0,...,m-1\}$:
+\begin{enumerate}[label*=\arabic*.]
+\item Berechne $g^j$ und speichere das Tupel $(j, g^j)$ in einer Tabelle.
+\end{enumerate}
+\item Setze $t := \alpha$.
+\item Für alle $i \in \{0,...,m-1\}$:
+\begin{enumerate}[label*=\arabic*.]
+\item Suche in der Tabelle nach einem Paar mit $t = g^j$.
+\item Wenn ein solches Paar existiert: Gib $im+j$ aus.
+\item Wenn nicht: Setze $t := t * g^{-m}$ und fahre fort.
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Beispiel}
+Als Beispiel wählen wir die prime Restklassengruppe $\mathbb{G} := (\mathbb{Z} / 37\mathbb{Z})^\times$. Durch ausprobieren findet man mit $g=5$ einen Generator dieser Restklassengruppe, dass $g=5$ tatsächlich ein erzeugendes Element ist soll im Nachfolgenden kurz gezeigt werden.
+
+Bekanntlich ist ein Element $g$ einer zyklischen Gruppe $\mathbb{G}$ ein Erzeuger dieser, wenn $org(\langle g \rangle) = ord(\mathbb{G})$ mit $ord(\mathbb{G}) := |\mathbb{G}|$ gilt. Durch nachrechnen stellt sich heraus, dass $ord(\langle 5 \rangle) = 36 = ord(\mathbb{G})$ und somit $\langle 5 \rangle = (\mathbb{Z} / 37\mathbb{Z})^\times$ gilt. Als Eingabe für den Babystep"=Giantstep"=Algorithmus setzen wir nun $g=5$.
+
+Nun suchen wir mit Hilfe des Babystep"=Giantstep"=Algorithmus den diskreten Logarithmus von $\alpha := 4$ zur Basis $g$, also eine Lösung der Gleichung $4=5^x \; mod \; 37$.
+
+\begin{itemize}
+\item Zunächst bestimmen wird die Ordnung der Gruppe, da 37 eine Primzahl ist, folgt für alle $\beta \in \{1,...,36\}$: $ggt(\beta, 37) = 1$. Somit gilt offensichtlich $n := \varphi(37) = 36$.
+
+Anschließend bestimmen wir $m$ wie folgt: $m := \big\lceil \; \sqrt{36} \; \big\rceil = 6$.
+\item Es werden für alle $j \in \{0,...,m-1\}$ die Tupel $(j, g^j)$ bestimmt und in die nachfolgende Tabelle eingetragen:
+
+% {1: 0, 17: 5, 5: 1, 33: 4, 25: 2, 14: 3}
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+  \hline
+  \textbf{$j$} & 0 & 1 & 2 & 3 & 4 & 5 \\
+  \hline
+  \textbf{$5^j$} & 1 & 5 & 25 & 14 & 33 & 17 \\
+  \hline
+\end{tabular}
+\end{table}}
+
+\item Es gilt $5^{-6} \equiv 5^{36-6} \equiv 27 \; mod \; 37$. Nun berechnen wir für $i \in \{0,...,m-1\}$ den Wert $4 * 27^i$. Sobald dieser Wert in der zweiten Zeile der vorhergehenden Tabelle gefunden wurde kann $j$ aus dieser bestimmt werden.
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+  \hline
+  \textbf{$i$} & 0 & 1 & 2 & 3 & 4 & 5 \\
+  \hline
+  \textbf{$4*27^i$} & 4 & 34 & 30 & \textbf{33} & - & - \\
+  \hline
+\end{tabular}
+\end{table}}
+
+Für $j=4$ erhalten wir $4*27^4=33$ dieser Wert findet sich auch in der zweiten Zeile der vorhergehenden Tabelle, damit terminiert der Algorithmus und es gilt $i=3$ sowie $j=4$, durch Einsetzen erhalten wir schließlich unser Endergebnis $x = 3*6+4 = 22$.
+Eine kurze Probe zeigt, dass $5^{22}=4 \; mod \; 37$ gilt und der Algorithmus somit das korrekte Ergebnis liefert.
+
+\end{itemize}
+
+\subsubsection{Laufzeit}
+Im Nachfolgenden soll die Laufzeit dieses Algorithmus analysiert werden. Schritt eins und drei werden nicht wiederholt liefern also nur einen konstanten Beitrag zur Gesamtlaufzeit. Die Schleifenbedingung in Schritt zwei ist offenbar nur von $m$ abhängig, somit werden alle Anweisungen innerhalb der Schleife genau $m$-mal durchlaufen. Im vierten Schritt kann die Schleife vorzeitig verlassen werden, im Worstcase muss allerdings die Schleife auch genau $m$-mal durchlaufen werden. Bei Anweisung 4.1 zeigt sich, dass eine iterative Suche innerhalb der zuvor erstellten Tabelle nicht sinnvoll ist, da dies die Gesamtlaufzeit wieder auf $\mathcal{O}(n)$ erhöhen würde. Daher bietet es sich an zur Speicherung der Wertepaare eine Hashtabelle zu verwenden, wobei die $g^j$ als Schlüssel verwendet werden sollten und die die jeweiligen $j$ als Werte.
+Die Anweisungen 4.2 und 4.3 sind hingegen wieder Elementar, also in $\mathcal{O}(1)$.
+
+Daraus resultiert schließlich eine Gesamtlaufzeit von $\mathcal{O}(m)$ bzw. $\mathcal{O}(\sqrt{n})$, was eine wesentliche Verbesserung der naiven Vorgehensweise zur Bestimmung des diskreten Logarithmus darstellt.
+
+\subsubsection{Speicherverbrauch}
+Der Speicherverbrauch des Babystep"=Giantstep"=Algorithmus wird im Wesentlichen nur von der Tabelle bestimmt, welche $m$-Einträgen nach Berechnung der Babysteps besitzt im weiteren Verlauf des Algorithmus muss, abgesehen von temporären Variablen, kein weiterer Speicher mehr alloziert werden. Der gesamte Speicherbedarf liegt somit in $\mathcal{O}(m)$.
+
+\subsection{Fazit}
+Die Laufzeiten der vorgestellten Algorithmen zur Bestimmung des diskreten Logarithmus sind alle von der Gruppenordnung abhängig. Im Gegensatz dazu lässt sich die diskreten Exponentialfunktion direkt berechnen, da nur elementare Rechenoperationen 
+notwendig sind, kann ein Funktionswert dieser Funktion in konstanter Zeit berechnet werden.
+
+Allgemein ist im Moment auch kein effizientes Verfahren zur Bestimmung des diskreten Logarithmus bekannt, daher qualifiziert sich die diskreten Exponentialfunktion ebenso wie die Multiplikation großer Primzahlen als Einwegfunktion. Wobei eine sogenannte Einwegfunktion eine Funktion ist deren Umkehrung zwar existiert, die Bestimmung eines Urbildes ist jedoch mit sehr großem Aufwand verbunden [... S. 87]. % TODO Zitat: Beutelsbacher Kryptoglogie ISBN 978-3-658-05976-7 Seite 87
+

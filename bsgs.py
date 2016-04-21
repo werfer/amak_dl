@@ -10,17 +10,19 @@ def baby_step_giant_step(p, g, beta):
         t = pow(g, j) % p
         table[t] = j
 
+    print("table:", table);
+
     # giantsteps
     t = beta
     for i in range(0, m):
+        print("t:", t)
         if t in table:
-            return i*m+j;
+            return i*m + table[t];
         else:
             t = (t * pow(g, p-1-m)) % p
 
     return -1
 
-
-dl = baby_step_giant_step(29, 11, 3)
-print(dl)
+dl = baby_step_giant_step(37, 5, 4)
+print("x =", dl)
 

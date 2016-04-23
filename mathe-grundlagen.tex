@@ -1,0 +1,116 @@
+% Autor = Fabian
+Zunächst einmal beschäftigen wir uns mit den mathematischen Grundlagen die für eine Betrachtung des Diskreten Logarithmus-Problems unabdingbar sind.
+
+\subsection{Gruppen}
+
+Es sei $(G, ·)$ eine Gruppe wie wir sie bereits aus anderen Vorlesungen kennen.\\
+Die Ordnung der Gruppe entspricht der Anzahl der Elemente in G.\\
+Die Ordnung eines Elements $\alpha \in G$ ist die Zahl $n$, für die gilt: $\alpha^n= e$, wobei $e$ das neutrale Element bzgl. · ist. 
+\\
+Es sei $n \in N$ und $\alpha^n= 1$ sowie $\alpha^{n/p} \neq  1$ für alle Primteiler $p$ von $n$. Dann ist $n$ die Ordnung von $\alpha$.
+\\
+Die Gruppe heißt zyklisch, wenn ein $\alpha \in G $ existiert, so dass gilt: 
+\begin{center}
+$ \forall a \in G \  \exists i \in N : \alpha^i = \alpha $
+\end{center} 
+$ \alpha $ heißt Generator der zyklischen Gruppe.\\
+Sei $ (G, \cdot \  p ) $ eine Gruppe und $ \alpha \in G$.\\
+$ \alpha $ habe eine endliche Ordnung. Man schreibt $ \langle \alpha \rangle $ für die von $ \alpha $ erzeugte Untergruppe.
+
+\subsection{Primwurzel}
+
+Es sei $(G,\cdot \ p)$ eine Gruppe, $ \alpha \in G $ und $p = |G|$.
+$ \alpha $ heißt Primitivwurzel, wenn $ \alpha $ die Ordnung $p$ hat und
+$ ggT( \alpha, p) = 1 $.\\
+Es sei $ ( Z_p, \cdot p ) $ eine prime Restklassengruppe und $ \alpha \in Z_p$.\\
+Weiterhin seien $ p_1 , p_2 , \cdots , p_n $ die Primfaktoren von $G$.\\
+$ \alpha $ ist eine Primitivwurzel, wenn für $ 1 \leq r \leq n $ gilt $ \alpha^{pr} \neq  1 $.
+
+\subsection{Beispiel}
+
+Als Beispiel dient die Primzahl p = 13 und die dazu gehörige prime Restklassengruppe $ G = ({Z} /13 {Z})^\times=\{1,2,\dotsc,12\} $. Zur Primitivwurzel $g = 2$ wird nun die Wertetabelle der diskreten Exponentiation bestimmt.
+
+\begin{align*}
+	2^0 = 1 & \equiv 1 \bmod 13\\
+	2^1 = 2 & \equiv 2 \bmod 13\\
+	2^2 = 4 &\equiv 4 \bmod 13\\
+	2^3 = 8 & \equiv 8 \bmod 13\\
+	2^4 = 16 & \equiv 3 \bmod 13\\
+	2^5 = 32 & \equiv 6 \bmod 13\\
+	2^6 = 64 & \equiv 12 \bmod 13\\
+	2^7 = 128 & \equiv 11 \bmod 13\\
+	2^8 = 256 & \equiv 9 \bmod 13\\
+	2^9 = 512 & \equiv 5 \bmod 13\\
+	2^{10} = 1024 & \equiv 10 \bmod 13\\
+	2^{11} = 2048 & \equiv 7 \bmod 13
+\end{align*}
+
+\begin{table}[h!]
+		\centering
+	\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+		$ a$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+			\hline 
+	    $2^a \equiv mod 11$  &	1 & 2 & 4 & 8 & 3 & 6 & 12 & 11 & 9 & 5 & 10 & 7 \\
+	\end{tabular}
+\end{table}
+Wie man sehen kann sind die Potenzen paarweise disjunkt und die gesamte prime Restklassengruppe kann mithilfe den Potenzen von g erstellt werden. Durch vertauschen und sortieren der Tabelle bekommt man die Wertetabelle für den diskreten Logarithmus.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+	$ x $ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+	\hline 
+	$\log_2 $ x &	1 & 2 & 5 & 3 & 10 & 6 & 12 & 4 & 9 & 11 & 8 & 7 \\
+	\end{tabular}
+\end{table}
+
+\subsection{Diskreter Logarithmus Problem}
+
+Voraussetzungen:
+
+Sei $(G, \cdot \  p)$ eine multiplikative Gruppe, $ \alpha \in G $ ein Element der
+Ordnung n und $\beta \in \left \langle \alpha \right \rangle $ \\
+\\
+\textbf{Problem:}
+\\
+Man berechnet ein $ a $ im Bereich $0 \leq a \leq n - 1 $, so dass
+$ \alpha^a = \beta $ ist. a nennt man den diskreten Logarithmus von $ \beta $ zur Basis $ \alpha $. \\
+Dieses einfach anzumutende Problem ist einer der großen Stützpfeiler, auf die sich unsere Kryptosysteme und Sicherheitssysteme stützen. Die Lösung dieses Problems bedarf im Vergleich zur Diskreten Exponentiation erheblich mehr Rechenaufwand. Die effiziente Lösung des diskreten Logarithmus ist eine Herausforderung der heutigen Mathematik und Kryptologie die uns vermutlich noch eine sehr lange Zeit beschäftigen wird. 
+
+\subsection{Kleiner fermatscher Satz}
+
+Der kleine fermatsche Satz sagt aus, dass bei einer ganzen Zahl a und einer Primzahl p gilt:
+ \begin{center}
+ 	$a^p \equiv a \bmod p$ 
+ \end{center}
+Falls a kein Vielfaches von p ist, so kann man die Gleichung umformen:
+\begin{center}
+	$ a^{p-1} \equiv 1 \bmod p$
+\end{center}
+
+\subsubsection{Beweis des kleinen fermatschen Satzes}
+
+Wir wollen zeigen, dass für eine Primzahl p und eine beliebige ganze Zahl a gilt:  $a^p \equiv a \bmod p$. 
+Wenn man es umformuliert kann man hiermit auch sagen, dass $a^p - a $ durch p teilbar ist. \\
+\\
+Ist a durch p teilbar, so gilt bereits $ a \equiv 0 \equiv a^p \bmod p$.\\
+Wir beweisen den kleinen fermatschen Satz durch Induktion.\\
+\\
+\textit{Induktionsanfang}:   $ 0^p - 0 = 0 $ und das ist durch p restlos teilbar.\\
+\textit{Induktionsschritt}: Die Behauptung sei wahr für ein bestimmtes a. Somit gilt für a+1: 
+\begin{center}
+	$ (a+1)^p - (a+1) = a^p + { \binom{p}{1}a^{p-1}} + \cdots + { \binom{p}{p-1}a} + 1 - (a+1)$
+\end{center}
+Wobei bei jedem Binominialkoeffizienten gilt, dass
+\begin{center}
+	$\binom{p}{k} = \frac{p \cdot (p-1) \cdots (p-k+1)}{1 \cdotp 2 \cdots k} $
+\end{center}
+und damit auch dass p mit $ 1 \leq k \leq p-1 $ nur im Zähler auftaucht. Da wir angenommen haben, dass p prim ist, tauchen auch sonst im Nenner keine weiteren Teiler auf. Die Binominialkoeffizienten sind demnach also alle durch p teilbar, da mindestens ein p im Zähler ist. Daraus folgt schließlich:
+\begin{center}
+	$ (a+1)^p - (a+1) \equiv a^p +1 - (a+1) = a^p - a \ \bmod p $
+\end{center}
+ und nach der Induktionsvoraussetzung ist dies durch p teilbar.\\
+\\
+Zur Berechnung des Diskreten Logarithmus gibt es noch keine schnellen Algorithmen. Die diskrete Exponentialfunktion hingegen lässt sich in kürzester Zeit sehr einfach berechnen. 
+Dies macht den diskreten Logarithmus zu einer perfekten Einwegfunktion die heute sehr weit in verschiedensten Kryptosystemen im Einsatz ist.\\
+Beispiele hierfür sind das ElGamal-Verschlüsselungsverfahren und das Massey-Omura-Schema, welchen wir uns noch zuwenden werden. Andere Beispiele auf die wir nicht eingehen sind der Diffie-Hellmann-Schlüsselaustausch und der Digitale Signatur Algorithmus.

@@ -1,0 +1,98 @@
+
+Idee:
+
+Wir berechnen den ’großen’ Logarithmus, indem wir
+Logarithmen für ’kleine’ Elemente aus $Z_p$ berechnen und
+damit Rückschlüsse auf den ’großen’ Logarithmus ziehen.
+
+\subsubsection{Vorberechnung}
+\begin{enumerate}
+	\item  Man bestimmt eine Zahl $B < n$ und die Menge $F(B) = \left\lbrace p_1 , p_2 , \cdots , p_B \right\rbrace $ von Primzahlen, die sogenannte Faktorbasis.
+	\item  Man wähle ein C größer als B, z.B. $B + 10$.
+	\item  Man erhält nun C Kongruenzen der Form
+	$ \alpha^ {x_j} \equiv {{p_1}^{a_{1j}}} {{p_2}^{a_{2j}}} \cdots {{p_B}^{a_{Bj}}} \bmod p $ für $ 1 \leq j \leq C $.
+	\item  Dies kann man in ein lineares Gleichungssystem mit C Gleichungen
+	umwandeln mit Gleichungen der Form \\
+	$ x_j \equiv a_{1j} \log_ \alpha p_1 + \cdots + a_{Bj} \log_ \alpha p_B \ \bmod p - 1 $  für  $ 1 \leq j \leq C $.
+	\item  Man bestimmt x-Werte, so dass $ \alpha^x $ nur Primfaktoren in $ F\left( B\right) $ hat,
+	und berechnet die Exponenten der Primfaktoren durch Division.
+	\item  Anschließend löst man das lineare Gleichungssystem mit dem
+	Gauss’schen Algorithmus.	
+\end{enumerate}
+
+- Die Vorberechnung terminiert in O$({e^{(1+o(1))\sqrt{\ln( p) \ln( \ln( p)) }}})$.
+
+\subsubsection{Bestimmen des diskreten Logarithmus}
+
+\begin{enumerate}
+	\item Man wählt zufällig ein $ s$ im Bereich $1 \leq s \leq p - 2 $ und berechnet $ y = \beta \alpha ^s \bmod \ p $.
+	
+	\item Wenn $s$ nur Primfaktoren in $F(B)$ hat, so erhält man \\
+	$ \beta \alpha ^s \equiv p^{c_11} p^{c_22} \cdots p^{c_BB} \bmod \ p $ \\
+	ansonsten muss man ein neues $s$ wählen.
+	
+	\item Jetzt kann man umformen nach \\
+	$ \log_ \alpha { \beta + s } \equiv c_1 \log_ \alpha {p_1} \ c_2 \log_ \alpha {p_2} \ \cdots \ c_B log_ \alpha p_B  \ \bmod p - 1 $.
+\end{enumerate}
+
+- Dieser Algorithmus terminiert in 
+$O(e^{{(1/2+o(1))}\sqrt{\ln (p) \ln( \ln( p) )}})$.
+
+\subsubsection{Beispiel}
+
+Wir nehmen an, dass $p = 83$ ist.
+Wir bestimmen nun $B = 7$ und $ F(B) = {p_1 = 2, p_2 = 3, p_3 = 5, p_4 =7}$ als die Faktorbasis aus Primzahlen.
+Wir wählen außerdem ein $C = 17$.\\
+\\
+In folgender Tabelle betrachten wir alles mit mod 82.
+\begin{align*}
+2^1 & \equiv \quad 2 \\
+2^7 & \equiv \quad 45 = 3^2 \cdot 5\\
+2^8 & \equiv \quad 7 \\
+2^9 & \equiv \quad 14 = 2 \cdot 7 \\
+2^{10} & \equiv \quad 28 = 2^2 \cdot 7 \\
+2^{11} & \equiv \quad 56 = 2^3 \cdot 7 \\
+2^{12} & \equiv \quad 29 \\
+2^{13} & \equiv \quad 58 = 2 \cdot 29 \\
+2^{14} & \equiv \quad 33 = 3 \cdot 11 \\
+2^{15} & \equiv \quad 66 = 3 \cdot 2 \cdot 11 \\
+2^{16} & \equiv \quad 49 = 7^2 \\
+2^{17} & \equiv \quad 15 = 3 \cdot 5 \\
+\end{align*}
+Aus diesem System nehmen wir nur diejenigen Gleichungen heraus, die wir durch unsere vorher bestimmte Faktorbasis darstellen können. In unserem Fall $2^1, 2^7, 2^8, 2^9 \ und \ 2^{17}$. Wir hätten auch mehr zur Verfügung, aber diese Anzahl reicht bereits.\\
+\\
+Die Gleichungen geben uns ein lineares Gleichungssystem das wir lösen.
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{cccc|c}
+		2 & 3 & 5 & 7 & \ \\
+		\hline
+		1 & 0 & 0 & 0 & 1\\
+		0 & 2 & 1 & 0 & 7\\
+		0 & 0 & 0 & 1 & 8\\
+		1 & 0 & 0 & 1 & 9\\
+		0 & 1 & 1 & 0 & 17 \\
+		\hline
+		0 & 1 & 0 & 0 & - 10 = 72 \\
+		0 & 0 & 1 & 0 &34 - 7 = 27 \\
+	\end{tabular}
+\end{table}
+Damit sind unsere Vorbereitungen abgeschlossen und wir bekommen:
+\begin{center}
+	$ \log_2(2)=1,\ \log_2(3)=72, \ \log_2(5)=27, \ \log_2(7)=8 $
+\end{center}
+Wenn wir nun $\log_2(31)$ wissen möchten gehen wir wie folgt vor.
+\begin{align*}
+31^2 &\equiv 48 = 2^4 \cdot 3   \ \ \ \ |log \\
+2 \cdot \log_2(31) & \equiv 4 \cdot \log_22 + \log_23 \\
+\Longleftrightarrow 2 \ \cdot \log_2(31) & \equiv 1+1+1+1 + 72 = 76 \\
+daraus & folgt: \\
+\log_2(31) & \equiv 38 \ oder \\
+\log_2(31) & \equiv 38+41 = 79\\
+\end{align*}
+und wie wir aus unserer Annahme leicht nachprüfen können ist $2^{38} \bmod 83 = 31$. Der wert 38 + 41 ist durch das Modulorechnen und die Teilung durch 2 zu überprüfen und mit einzuplanen.
+
+\subsubsection{Bemerkung}
+
+Von einem Laufzeitstandpunkt aus gesehen ist bei großen Primzahlen das Index-Calculus-Verfahren schneller als z.b. Shanks Baby-Step-Giant-Step Algorithmus.
+Jedoch kann man nicht davon sprechen dass der diskrete Logarithmus hiermit schnell im Vergleich zur diskreten Exponentiation berechnet werden kann. 

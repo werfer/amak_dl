@@ -140,6 +140,7 @@ und damit auch dass p mit $ 1 \leq k \leq p-1 $ nur im Zähler auftaucht. Da wir
 Zur Berechnung des Diskreten Logarithmus gibt es noch keine schnellen Algorithmen. Die diskrete Exponentialfunktion hingegen lässt sich in kürzester Zeit sehr einfach berechnen. 
 Dies macht den diskreten Logarithmus zu einer perfekten Einwegfunktion die heute sehr weit in verschiedensten Kryptosystemen im Einsatz ist.\\
 Beispiele hierfür sind der Diffie-Hellmann-Schlüsselaustausch, Elgamal- \\ Schlüsselaustausch, welchen wir später noch kennene lernen und der Digitale Signatur Algorithmus. Ein weiterer Algorithmus ist das Massey-Omura-Schema, das wir nun ausführlicher behandeln.
+
 \newpage
 \section{Massey-Omura-Schema}
 
@@ -252,18 +253,18 @@ Wir wählen außerdem ein $C = 17$.\\
 \\
 In folgender Tabelle betrachten wir alles mit mod 82.
 \begin{align*}
-2^1 & \equiv \quad 2 \\
-2^7 & \equiv \quad 45 = 3^2 \cdot 5\\
-2^8 & \equiv \quad 7 \\
-2^9 & \equiv \quad 14 = 2 \cdot 7 \\
-2^{10} & \equiv \quad 28 = 2^2 \cdot 7 \\
-2^{11} & \equiv \quad 56 = 2^3 \cdot 7 \\
-2^{12} & \equiv \quad 29 \\
-2^{13} & \equiv \quad 58 = 2 \cdot 29 \\
-2^{14} & \equiv \quad 33 = 3 \cdot 11 \\
-2^{15} & \equiv \quad 66 = 3 \cdot 2 \cdot 11 \\
-2^{16} & \equiv \quad 49 = 7^2 \\
-2^{17} & \equiv \quad 15 = 3 \cdot 5 \\
+	2^1 & \equiv \quad 2 \\
+	2^7 & \equiv \quad 45 = 3^2 \cdot 5\\
+	2^8 & \equiv \quad 7 \\
+	2^9 & \equiv \quad 14 = 2 \cdot 7 \\
+	2^{10} & \equiv \quad 28 = 2^2 \cdot 7 \\
+	2^{11} & \equiv \quad 56 = 2^3 \cdot 7 \\
+	2^{12} & \equiv \quad 29 \\
+	2^{13} & \equiv \quad 58 = 2 \cdot 29 \\
+	2^{14} & \equiv \quad 33 = 3 \cdot 11 \\
+	2^{15} & \equiv \quad 66 = 3 \cdot 2 \cdot 11 \\
+	2^{16} & \equiv \quad 49 = 7^2 \\
+	2^{17} & \equiv \quad 15 = 3 \cdot 5 \\
 \end{align*}
 Aus diesem System nehmen wir nur diejenigen Gleichungen heraus, die wir durch unsere vorher bestimmte Faktorbasis darstellen können. In unserem Fall $2^1, 2^7, 2^8, 2^9 \ und \ 2^{17}$. Wir hätten auch mehr zur Verfügung, aber diese Anzahl reicht bereits.\\
 \\
@@ -289,12 +290,12 @@ Damit sind unsere Vorbereitungen abgeschlossen und wir bekommen:
 \end{center}
 Wenn wir nun $\log_2(31)$ wissen möchten gehen wir wie folgt vor.
 \begin{align*}
-31^2 &\equiv 48 = 2^4 \cdot 3   \ \ \ \ |log \\
-2 \cdot \log_2(31) & \equiv 4 \cdot \log_22 + \log_23 \\
-\Longleftrightarrow 2 \ \cdot \log_2(31) & \equiv 1+1+1+1 + 72 = 76 \\
-daraus & folgt: \\
-\log_2(31) & \equiv 38 \ oder \\
-\log_2(31) & \equiv 38+41 = 79\\
+	31^2 &\equiv 48 = 2^4 \cdot 3   \ \ \ \ |log \\
+	2 \cdot \log_2(31) & \equiv 4 \cdot \log_22 + \log_23 \\
+	\Longleftrightarrow 2 \ \cdot \log_2(31) & \equiv 1+1+1+1 + 72 = 76 \\
+	daraus & folgt: \\
+	\log_2(31) & \equiv 38 \ oder \\
+	\log_2(31) & \equiv 38+41 = 79\\
 \end{align*}
 und wie wir aus unserer Annahme leicht nachprüfen können ist $2^{38} \bmod 83 = 31$. Der wert 38 + 41 ist durch das Modulorechnen und die Teilung durch 2 zu überprüfen und mit einzuplanen.
 

@@ -1,0 +1,60 @@
+% Autor: Fabian
+Der Grundgedanke an die Anforderungen eines Sicheren Nachrichtensystems war, dass beide Parteien weder den privaten noch den öffentlichen Schlüssel der anderen Partei besitzen oder auf diesen Schlussfolgern können. Das Massey-Omura-Schema wurde hierzu im Jahre 1983 von den Kryptologen James Massey und Jim Omura entwickelt und basiert auf der Schwierigkeit, den diskreten Logarithmus zu lösen.
+
+\subsubsection{intuitive Beschreibung}
+
+Um im Vorhinein die Wirkungsweise zu verdeutlichen ohne die dahinter liegende Mathematik anzutasten, beschreiben wir die Methode mithilfe einer Metapher.
+\begin{itemize}
+	\item
+	Alice und Bob wollen Nachrichten austauschen. Zu erst möchte Alice an Bob eine Nachricht schicken und legt diese Nachricht in eine Kiste, verschließt sie mit ihrem Schloss und sendet die Kiste an Bob.
+	\item
+	Bob bekommt die Kiste, kann das Schloss von Alice nicht entfernen, da er den Schlüssel hierzu nicht hat. Nun hängt Bob auch sein Schloss an die Truhe und schickt die Truhe wieder zurück an Alice.
+	\item
+	Alice entfernt ihr eigenes Schloss, da sie ursprünglich den Schlüssel hierzu besitzt. Die Kiste ist immer noch verschlossen, da Bobs Schloss noch an der Kiste hängt. Alice schickt nun die Kiste ein letztes mal an Bob.
+	\item
+	Bob bekommt die Kiste mit nur seinem Schloss das er durch seinen eigenen Schlüssel auch wieder entfernen kann. Die Kiste hat nun kein Schloss mehr und Bob kann die Nachricht von Alice lesen die sich in der Kiste befindet.
+\end{itemize}
+\subsubsection{Voraussetzung}
+
+Die Voraussetzung an das Verfahren ist, dass beide über eine gemeinsame und  genügend große Primzahl p bescheid wissen. Diese Primzahl kann öffentlich bekannt sein. \\
+\\
+Alice und Bob wählen nun jeweils ein Paar von Exponenten $ d $ und $ e $ mit \begin{center}
+	$ ed \equiv 1 \ (\bmod p-1) $
+\end{center} , das bedeutet also dass\begin{center}
+ $ a^{de} \equiv a \ (\bmod {p-1}) $
+\end{center} 
+für alle ganzen Zahlen $ a \in Z $ gilt. Diese Behauptung wurde durch den kleinen Satz von Fermet bereits bestätigt. Diese Voraussetzung ist dann später hilfreich um mit dem Schlüsselpaar die eigene Verschlüsselung wieder aufzuheben.  Für die Berechnung von $e$  muss zuerst ein $e$ mit 
+\begin{center}
+	$e < p-1$  und $ggT(e,p-1) = 1 $
+\end{center} 
+gefunden werden. $d$ ist dann das multiplikativ Inverse von $e \bmod p-1$. \\
+Beide Parteien Alice und Bob halten ihre Zahlen geheim.
+
+\subsubsection{Ablauf}
+
+Alice berechnet aus ihrer ursprünglichen Nachricht $m < p$ die Nachricht $x_A$ die sie an Bob sendet 
+\begin{center}
+	$x_{A1} = m^{e_A} \bmod p$
+\end{center}
+Bob berechnet aus dieser Nachricht seine eigene Rückantwort \begin{center}
+	$x_B = (x_A)^{e_B} \bmod p$ \\
+    $\Leftrightarrow	x_B = (m^{e_A})^{e_B} \bmod p$. 
+\end{center}
+Alice erzeugt ausgehend der Rückantwort von Bob und mithilfe ihres Schlüssels nun die nur von Bob verschlüsselte Nachricht. 
+\begin{align*}
+x_{A2}  & = {x_B}^{d_A} \bmod p \\
+\Leftrightarrow x_{A2} & = ((m^{e_A})^{e_B})^{d_A} \bmod p \\
+\Leftrightarrow x_{A2} & = ((m^{e_A})^{d_A})^{e_B} \bmod p \\
+\Leftrightarrow x_{A2} & = m^{e_B} \bmod p
+\end{align*}
+ In diesem Schritt hat Alice also all ihre Verschlüsselung der Ursprungsnachricht wieder aufgehoben und die Nachricht ist nur noch durch die Verschlüsselung von Bob verschlüsselt. \\
+Bob entschlüsselt die Nachricht nun mit 
+\begin{center}
+	$ {x_A2}^{d_B} = (m^{e_B})^{d_B} = m \bmod p$. 
+\end{center}
+Bob hat damit nun die Ursprungsnachricht von Alice bekommen. Außer Alice und Bob konnte ohne das Wissen der Schlüssel niemand auf die Ursprungsnachricht m während der Datenübertragung zugreifen. 
+
+\subsubsection{Sicherheitsaspekte}
+
+Das Massey-Omura-Schema ist gegen einen Lauschangriff sicher, solange das Problem des Diskreten Logarithmus nicht effizient lösbar ist. Wenn dieser Fall eintreten sollte, ist dieses Verfahren nicht mehr sicher, da aus den einzelnen übertragenen Nachrichten Rückschlüsse auf die Schlüssel gezogen werden könnten.\\
+Einen Wirkungsvollen Schutz gegen einen Man-in-the-Middle Angriff bietet dieses Schema jedoch nicht, da dieses Verfahren nur gegen Lauschangriffe ausgelegt ist.

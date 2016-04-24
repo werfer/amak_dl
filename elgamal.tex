@@ -80,7 +80,7 @@ Das DDH"=Problem befasst sich mit der Schwierigkeit, zu entscheiden, ob eine Zah
 Nachfolgenden verwenden wir folgende Notationen: Mit $\mathcal{G}$ bezeichnen wir einen Algorithmus zu Erzeugung von Gruppen.
 Sei nun nachfolgend $\mathcal{G}$ ein $\mathsf{PPT}$ Algorithmus, welcher einen Sicherheitsparameter $1^n$ entgegen nimmt und als Ausgabe eine vollständige Beschreibung einer zyklischen Gruppe $\mathbb{G}$, deren Ordnung $q$ und einen Generator $g$ liefert. Das DDH"=Problem wird nun wie folgt definiert:
 
-\paragraph{Definition ...}
+\begin{definition}
 Wir sagen, dass ein DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, wenn für alle $\mathsf{PPT}$ Algorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, sodass:
 $$
 \Big| \mathrm{Pr}[ \mathcal{A}( \mathbb{G}, q, g, g^x, g^y, g^z) = 1 ] -
@@ -88,6 +88,7 @@ $$
 $$
 wobei in beiden Fällen die Wahrscheinlichkeiten über ein Experiment berechnet wird, dass ein Tupel $(\mathbb{G},q,g)$ als Ausgabe von $\mathcal{G}(1^n)$ bestimmt. Die $x,y,z \in (\mathbb{Z} / q\mathbb{Z})^\times$
 werden zufällig gewählt.
+\end{definition}
 \bigskip
 
 Der Ursprung des Parameters $1^n$ ist vielleicht nicht sofort offensichtlich, deshalb wollen wir an dieser Stelle eine kurze Erläuterung wiedergeben:
@@ -98,22 +99,24 @@ Notice the presence of a rather mysterious"=looking $1^n$ as an input parameter 
 
 Bevor wir uns wieder dem DDH"=Problem zuwenden, wollen wir noch ein kurzes Lemma einführen. Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ ein zufälliges Element. Das Lemma besagt nun, dass die Multiplikation von $m$ mit einem zufälligen Element $k$ der Gruppe, zu gleichmäßig verteilten Elementen $k'$ der Gruppe führt. Somit ist die Verteilung der $k'$ nicht von $m$ abhängig und damit kann aus $k'$ keine Information gewonnen werden, welche Rückschlüsse auf $m$ zulässt. [... S400] % TODO modern crypto seite 400
 
-\paragraph{Lemma ...} Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ willkürlich gewählt. Wird $k \gets \mathbb{G}$ zufällig gewählt und ist $k' := k*m$, dann erhält man die selbe Verteilung für $k'$, als wenn $k' \gets \mathbb{G}$ gewählt wird.
+\begin{lemma}\label{lemma_verteilung}
+Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ willkürlich gewählt. Wird $k \gets \mathbb{G}$ zufällig gewählt und ist $k' := k*m$, dann erhält man die selbe Verteilung für $k'$, als wenn $k' \gets \mathbb{G}$ gewählt wird.
 Anders gesagt, gilt für alle $\hat{g} \in \mathbb{G}$:
 $$
 \mathrm{Pr}[k*m=\hat{g}]=1/|\mathbb{G}|,
 $$
 wobei die die Wahrscheinlichkeit durch eine zufälligen Wahl von $k \in \mathbb{G}$ bestimmt wird.
+\end{lemma}
 
-\paragraph{Beweis ...} Sei $\hat{g} \in \mathbb{G}$ beliebig. Dann gilt:
+\begin{proof}
+Sei $\hat{g} \in \mathbb{G}$ beliebig. Dann gilt:
 $$
 \mathrm{Pr}[k*m = \hat{g}] = \mathrm{Pr}[k = \hat{g}*m^{-1}].
 $$
 Da $g$ gleichmäßig per Zufall aus $\mathbb{G}$ gewählt wurde, ist die Wahrscheinlichkeit, dass $g$ gleich dem fixierten Element $m^{-1}*\hat{g}$ ist, genau $1 / |\mathbb{G}|$.
 
-\qed
-
-\vspace{2em}
+\end{proof}
+\bigskip
 
 Dieses soeben bewiesene Lemma lässt sich dazu nutzen, ein perfekt sicheres Verschlüsselungsverfahren mit $\mathbb{G}$ als Nachrichtenraum zu konstruieren. Sender und Empfänger teilen sich den geheimen Schlüssel $k \gets \mathbb{G}$. Eine Nachricht $m \in \mathbb{G}$ kann nun einfach mit $c := k*m$ verschlüsselt und mit $m := c/k$ entschlüsselt werden. [... S. 400] Ein solches Verfahren wäre einfach eine Umsetzung des One"=Time"=Pad Schemas.
 
@@ -142,16 +145,21 @@ Das Public"=Key Experiment, auf das wir uns nachfolgend beziehen, kann für ein 
  \item $\mathcal{A}$ gibt ein Bit $b'$ aus. Das Experiment gibt nun 1 zurück wenn $b' = b$ ansonsten 0. Wobei der Angreifer $\mathcal{A}$ Erfolg hatte, wenn $b' = b$ gilt.
 \end{itemize}
 
-\paragraph{Definition ...} Das Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec})$ besitzt nicht zu unterscheidende Geheimtexte aus Sicht eines Abhörers, wenn für alle $\mathsf{PPT}$ Angriffsalgorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, für die gilt:
+\begin{definition}
+Das Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec})$ besitzt nicht zu unterscheidende Geheimtexte aus Sicht eines Abhörers, wenn für alle $\mathsf{PPT}$ Angriffsalgorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, für die gilt:
 $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2} + \mathsf{negl}(n).
 $$
+\end{definition}
 
 Nun haben wir alle Vorbereitungen getroffen und können nachfolgend die Sicherheit dieses Verfahrens in Bezug auf das DDH"=Problem beweisen.
 
-\paragraph{Satz ...} \hspace{1em} Wenn das DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, dann generiert das ElGamal"=Verschlüsselungsverfahren nicht zu unterscheidende Geheimtexte unter Angriffen mit ausgewählten Klartexten. Anders gesagt das Verfahren garantiert die Ununterscheidbarkeit von Geheimtexten.
+\begin{theorem}
+Wenn das DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, dann generiert das ElGamal"=Verschlüsselungsverfahren nicht zu unterscheidende Geheimtexte unter Angriffen mit ausgewählten Klartexten. Anders gesagt das Verfahren garantiert die Ununterscheidbarkeit von Geheimtexten.
+\end{theorem}
 
-\paragraph{Beweis ...} Sei $\Pi$ das ElGamal"=Verschlüsselungsverfahren. Wir zeigen nachfolgend, dass $\Pi$ nicht zu unterscheidende Geheimtexte unter Anwesenheit eines Beobachters generiert.
+\begin{proof}
+Sei $\Pi$ das ElGamal"=Verschlüsselungsverfahren. Wir zeigen nachfolgend, dass $\Pi$ nicht zu unterscheidende Geheimtexte unter Anwesenheit eines Beobachters generiert.
 
 Sei $\mathcal{A}$ ein $\mathsf{PPT}$ Algorithmus, welcher die Rolle des Angreifers übernimmt. Nun wollen wir zeigen, dass eine zu vernachlässigende Funktion $\mathsf{negl}$ existiert, sodass gilt:
 $$
@@ -164,9 +172,7 @@ $$
 $$
 Es zeigt sich, dass $\tilde{\Pi}$ kein Verschlüsselungsverfahren ist, da für einen Empfänger keine Möglichkeit besteht den empfangen Geheimtext zu entschlüsseln. Das Experiment $\mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n)$ ist allerdings dennoch wohldefiniert, da das Experiment lediglich von der Erzeugung der Schlüssel und dem Entschlüsselungsalgorithmus abhängig ist.
 
-Aus Lemma ... % TODO
-folgt, dass die zweite Komponente des Geheimtextes des Verfahrens $\tilde{\Pi}$ ein gleichmäßig zufällig verteiltes Element der Gruppe $\mathbb{G}$ ist. Weiterhin besteht keine Abhängigkeit zur Nachricht $m$ welche zu verschlüsseln ist, da aus Lemma ... % TODO
-folgt, dass $g^z$ ein zufälliges Element von $\mathbb{G}$ ist wenn $z$ aus $\mathbb{Z_q}$ zufällig gewählt wurde.
+Aus Lemma \ref{lemma_verteilung} folgt, dass die zweite Komponente des Geheimtextes des Verfahrens $\tilde{\Pi}$ ein gleichmäßig zufällig verteiltes Element der Gruppe $\mathbb{G}$ ist. Weiterhin besteht keine Abhängigkeit zur Nachricht $m$ welche zu verschlüsseln ist, da aus Lemma \ref{lemma_verteilung} auch folgt, dass $g^z$ ein zufälliges Element von $\mathbb{G}$ ist, wenn $z$ aus $\mathbb{Z_q}$ zufällig gewählt wurde.
 Die erste Komponente des Geheimtextes ist offensichtlich nicht von $m$ abhängig, es lassen sich somit auch keine Informationen über $m$ aus dieser gewinnen. Zusammengefasst bedeutet dies, dass der gesamte Geheimtext keinerlei Informationen über $m$ enthält. Daraus folgt folgender Zusammenhang:
 $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\tilde{\Pi}}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2}.
@@ -227,9 +233,8 @@ Unter der Annahme, dass das DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, 
 \end{align*}
 Dies impliziert $\mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2} + \mathsf{negl}(n)$, was zu zeigen war.
 
-\qed
-
-\vspace{2em}
+\end{proof}
+\bigskip
 
 \subsubsection{Praxis}
 Das ElGamal"=Verschlüsselungsverfahren wird auch in der Praxis eingesetzt, so wird es beispielsweise von GnuPG angeboten. Für einen gewissen Zeitraum war das ElGamal"=Verfahren sogar als Voreinstellung in GnuPG gesetzt.

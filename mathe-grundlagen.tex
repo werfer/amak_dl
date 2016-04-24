@@ -1,9 +1,11 @@
 % Autor = Fabian
-Zunächst einmal beschäftigen wir uns mit den mathematischen Grundlagen die für eine Betrachtung des Diskreten Logarithmus-Problems unabdingbar sind.
+In Kryptosystemen wird eine Funktionalität gefordert die es ermöglicht, geheime Daten auszutauschen. Dies wird durch den Einsatz von Symmetrischen Übertragungsverfahren bewerkstelligt, bei dem beide Parteien einen gemeinsamen geheimen Schlüssel besitzen. Um diesen geheimen Schlüssel auszutauschen ohne das ein Angreifer darauf zugriff hat, verwendet man Algorithmen und Methoden die sehr oft auf dem Problem des Diskreten Logarithmus aufbauen. \\
+Der Diskrete Logarithmus ist sehr schwer zu berechnen. Die erzeugende Exponentialfunktion hingegen ist sehr einfach im Sinne der Komplexität zu berechnen was den Diskreten Logarithmus zu einem perfekten Kandidaten für einen erstmaligen Schlüsselaustausch macht. \\
+Zunächst einmal beschäftigen wir uns deswegen mit den mathematischen Grundlagen die für eine Betrachtung des Diskreten Logarithmus-Problems unabdingbar sind.
 
 \subsection{Gruppen}
 
-Es sei $(G, ·)$ eine Gruppe wie wir sie bereits aus anderen Vorlesungen kennen.\\
+Es sei $(G, \cdot)$ eine Gruppe wie wir sie bereits aus anderen Vorlesungen kennen.\\
 Die Ordnung der Gruppe entspricht der Anzahl der Elemente in G.\\
 Die Ordnung eines Elements $\alpha \in G$ ist die Zahl $n$, für die gilt: $\alpha^n= e$, wobei $e$ das neutrale Element bzgl. · ist. 
 \\
@@ -22,7 +24,7 @@ $ \alpha $ habe eine endliche Ordnung. Man schreibt $ \langle \alpha \rangle $ f
 Es sei $(G,\cdot \ p)$ eine Gruppe, $ \alpha \in G $ und $p = |G|$.
 $ \alpha $ heißt Primitivwurzel, wenn $ \alpha $ die Ordnung $p$ hat und
 $ ggT( \alpha, p) = 1 $.\\
-Es sei $ ( Z_p, \cdot p ) $ eine prime Restklassengruppe und $ \alpha \in Z_p$.\\
+Es sei $ ( Z_p, \cdot \ p ) $ eine prime Restklassengruppe und $ \alpha \in Z_p$.\\
 Weiterhin seien $ p_1 , p_2 , \cdots , p_n $ die Primfaktoren von $G$.\\
 $ \alpha $ ist eine Primitivwurzel, wenn für $ 1 \leq r \leq n $ gilt $ \alpha^{pr} \neq  1 $.
 
@@ -74,16 +76,16 @@ Ordnung n und $\beta \in \left \langle \alpha \right \rangle $ \\
 \textbf{Problem:}
 \\
 Man berechnet ein $ a $ im Bereich $0 \leq a \leq n - 1 $, so dass
-$ \alpha^a = \beta $ ist. a nennt man den diskreten Logarithmus von $ \beta $ zur Basis $ \alpha $. \\
+$ \alpha^a = \beta $ ist. $a$ nennt man den diskreten Logarithmus von $ \beta $ zur Basis $ \alpha $. \\
 Dieses einfach anzumutende Problem ist einer der großen Stützpfeiler, auf die sich unsere Kryptosysteme und Sicherheitssysteme stützen. Die Lösung dieses Problems bedarf im Vergleich zur Diskreten Exponentiation erheblich mehr Rechenaufwand. Die effiziente Lösung des diskreten Logarithmus ist eine Herausforderung der heutigen Mathematik und Kryptologie die uns vermutlich noch eine sehr lange Zeit beschäftigen wird. 
 
 \subsection{Kleiner fermatscher Satz}
 
-Der kleine fermatsche Satz sagt aus, dass bei einer ganzen Zahl a und einer Primzahl p gilt:
+Der kleine fermatsche Satz sagt aus, dass bei einer ganzen Zahl $a$ und einer Primzahl $p$ gilt:
  \begin{center}
  	$a^p \equiv a \bmod p$ 
  \end{center}
-Falls a kein Vielfaches von p ist, so kann man die Gleichung umformen:
+Falls $a$ kein Vielfaches von $p$ ist, kann man die Gleichung umformen:
 \begin{center}
 	$ a^{p-1} \equiv 1 \bmod p$
 \end{center}
@@ -91,7 +93,7 @@ Falls a kein Vielfaches von p ist, so kann man die Gleichung umformen:
 \subsubsection{Beweis des kleinen fermatschen Satzes}
 
 Wir wollen zeigen, dass für eine Primzahl p und eine beliebige ganze Zahl a gilt:  $a^p \equiv a \bmod p$. 
-Wenn man es umformuliert kann man hiermit auch sagen, dass $a^p - a $ durch p teilbar ist. \\
+Wenn man es umformuliert kann man hiermit auch sagen, dass $a^p - a $ durch $p$ teilbar ist. \\
 \\
 Ist a durch p teilbar, so gilt bereits $ a \equiv 0 \equiv a^p \bmod p$.\\
 Wir beweisen den kleinen fermatschen Satz durch Induktion.\\

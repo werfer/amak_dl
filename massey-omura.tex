@@ -1,5 +1,5 @@
 % Autor: Fabian
-Der Grundgedanke an die Anforderungen eines Sicheren Nachrichtensystems war, dass beide Parteien weder den privaten noch den öffentlichen Schlüssel der anderen Partei besitzen oder auf diesen Schlussfolgern können. Das Massey-Omura-Schema wurde hierzu im Jahre 1983 von den Kryptologen James Massey und Jim Omura entwickelt und basiert auf der Schwierigkeit, den diskreten Logarithmus zu lösen.
+Der Grundgedanke an die Anforderungen dieses Sicheren Übertragungsschemas war, dass beide Parteien weder den privaten noch den öffentlichen Schlüssel der anderen Partei besitzen oder auf diesen Schlussfolgern können. Das Massey-Omura-Schema wurde hierzu im Jahre 1983 von den Kryptologen James Massey und Jim Omura entwickelt und basiert auf der Schwierigkeit, den diskreten Logarithmus zu lösen.
 
 \subsubsection{intuitive Beschreibung}
 
@@ -19,9 +19,9 @@ Um im Vorhinein die Wirkungsweise zu verdeutlichen ohne die dahinter liegende Ma
 Die Voraussetzung an das Verfahren ist, dass beide über eine gemeinsame und  genügend große Primzahl p bescheid wissen. Diese Primzahl kann öffentlich bekannt sein. \\
 \\
 Alice und Bob wählen nun jeweils ein Paar von Exponenten $ d $ und $ e $ mit \begin{center}
-	$ ed \equiv 1 \ (\bmod p-1) $
+	$ ed \equiv 1 \ (\bmod \ p-1) $
 \end{center} , das bedeutet also dass\begin{center}
- $ a^{de} \equiv a \ (\bmod {p-1}) $
+ $ a^{de} \equiv a \ (\bmod \ p-1) $
 \end{center} 
 für alle ganzen Zahlen $ a \in Z $ gilt. Diese Behauptung wurde durch den kleinen Satz von Fermet bereits bestätigt. Diese Voraussetzung ist dann später hilfreich um mit dem Schlüsselpaar die eigene Verschlüsselung wieder aufzuheben.  Für die Berechnung von $e$  muss zuerst ein $e$ mit 
 \begin{center}
@@ -50,7 +50,7 @@ x_{A2}  & = {x_B}^{d_A} \bmod p \\
  In diesem Schritt hat Alice also all ihre Verschlüsselung der Ursprungsnachricht wieder aufgehoben und die Nachricht ist nur noch durch die Verschlüsselung von Bob verschlüsselt. \\
 Bob entschlüsselt die Nachricht nun mit 
 \begin{center}
-	$ {x_A2}^{d_B} = (m^{e_B})^{d_B} = m \bmod p$. 
+	$ {x_{A2}}^{d_B} = (m^{e_B})^{d_B} = m \bmod p$. 
 \end{center}
 Bob hat damit nun die Ursprungsnachricht von Alice bekommen. Außer Alice und Bob konnte ohne das Wissen der Schlüssel niemand auf die Ursprungsnachricht m während der Datenübertragung zugreifen. 
 

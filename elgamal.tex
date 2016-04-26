@@ -3,22 +3,26 @@ Aus der Begebenheit, dass zur Bestimmung des diskreten Logarithmus kein derzeit 
 
 Hierzu noch eine kurze Erläuterung: Das ElGamal"=Verschlüsselungsverfahren nutzt einen öffentlichen und einen geheimen Schlüssel. Der öffentliche Schlüssel dient dem Verschlüsseln von Nachrichten und darf veröffentlicht werden. Der geheime Schlüssel wird dazu genutzt, empfangene Nachrichten zu entschlüsseln. Der geheime Schlüssel darf natürlich nur dem Empfänger der Nachricht bekannt sein.
 
-Weiterhin ist anzumerken, dass das ElGamal"=Verfahren eng mit dem Diffie"=Hellman"=Schema verwandt ist. Dies ist kein Zufall, den Taher El Gamal erkannte 1985, dass das Diffie"=Hellman Schlüsselaustauschverfahren zu einem Public"=Key Verschlüsselungsverfahren erweitert werden kann. [... S. 400] % TODO Introduction to modern ...
+Weiterhin ist anzumerken, dass das ElGamal"=Verfahren eng mit dem Diffie"=Hellman"=Schema verwandt ist. Dies ist kein Zufall, den Taher El Gamal erkannte 1985, dass das Diffie"=Hellman Schlüsselaustauschverfahren zu einem Public"=Key Verschlüsselungsverfahren erweitert werden kann.
+\reference{\hyperref[ref_1]{1}, S. 400}
 Das Diffie"=Hellman Schlüsselaustauschverfahren soll allerdings hier nicht weiter erläutert werden.
 
 \subsubsection{Beschreibung des Verfahrens}
 Im Nachfolgenden gehen wir davon aus, dass A eine Nachricht an B senden will, wir bezeichnen also den Sender mit A sowie den Empfänger mit B.
 
 \paragraph{Wahl der Parameter} ~\\
-Beide Teilnehmer müssen sich über eine zyklische Gruppe $\mathbb{G} = \langle g \rangle$ der Ordnung $p$ einigen, sowohl $\mathbb{G}$ als auch der Erzeuger $g$ werden öffentlich gemacht. [...] % TODO Zitat: Beutelsbacher Kryptoglogie ISBN 978-3-658-05976-7 Seite 147
-Das National Institute of Standards and Technology (oder kurz NIST) hat eine Auswahl an empfohlenen Parametern veröffentlicht. [... S. 404] % TODO modern crypto
+Beide Teilnehmer müssen sich über eine zyklische Gruppe $\mathbb{G} = \langle g \rangle$ der Ordnung $p$ einigen, sowohl $\mathbb{G}$ als auch der Erzeuger $g$ werden öffentlich gemacht.
+\reference{\hyperref[ref_2]{2}, S. 147}
+Das National Institute of Standards and Technology (oder kurz NIST) hat eine Auswahl an empfohlenen Parametern veröffentlicht.
+\reference{\hyperref[ref_1]{1}, S. 404}
 
 \paragraph{Erzeugung der Schlüssel} ~\\
-Der Empfänger muss zunächst eine zufällige natürlich Zahl $b \in \{1,..,p-1\}$ als geheimen Schlüssel wählen. Anschließend erzeugt der Empfänger B seinen öffentlichen Schlüssel. Er berechnet hierfür das Gruppenelement $\beta = g^b \in \mathbb{G}$ und gibt dieses bekannt.
+Der Empfänger muss zunächst eine zufällige natürlich Zahl $b \in \{1,...,p-1\}$ als geheimen Schlüssel wählen. Anschließend erzeugt der Empfänger B seinen öffentlichen Schlüssel. Er berechnet hierfür das Gruppenelement $\beta = g^b \in \mathbb{G}$ und gibt dieses bekannt.
 
 \paragraph{Verschlüsseln} ~\\
-Möchte nun A eine Nachricht $m \in \mathbb{G}$ an B senden, muss A zunächst eine zufällige natürlich Zahl $a \in \{1,..,p-1\}$ wählen und daraus das Gruppenelement $\alpha = g^a \in \mathbb{G}$ berechnen. Anschließend bestimmt A den Schlüssel $k = \beta^a \in \mathbb{G}$. A wendet nun einen Verschlüsselungalgorithmus $f$ unter Verwendung des Schlüssel $k$ auf die Nachricht $m$ an. Den resultierenden Geheimtext $c = f_k(m) \in \mathbb{G}$ sowie das Element $\alpha$ sendet A an B.
-Im ursprünglichen ElGamal"=Schema wurde $f$ definiert als: $f_k(x) = k*x \; mod \; p$ in einer primen Restklassengruppe der Ordnung $p$. % TODO Zitat: Beutelsbacher Kryptoglogie ISBN 978-3-658-05976-7 Seite 147
+Möchte nun A eine Nachricht $m \in \mathbb{G}$ an B senden, muss A zunächst eine zufällige natürlich Zahl $a \in \{1,...,p-1\}$ wählen und daraus das Gruppenelement $\alpha = g^a \in \mathbb{G}$ berechnen. Anschließend bestimmt A den Schlüssel $k = \beta^a \in \mathbb{G}$. A wendet nun einen Verschlüsselungalgorithmus $f$ unter Verwendung des Schlüssel $k$ auf die Nachricht $m$ an. Den resultierenden Geheimtext $c = f_k(m) \in \mathbb{G}$ sowie das Element $\alpha$ sendet A an B.
+Im ursprünglichen ElGamal"=Schema wurde $f$ definiert als: $f_k(x) = k*x \; mod \; p$ in einer primen Restklassengruppe der Ordnung $p$.
+\reference{\hyperref[ref_2]{2}, S. 147}
 
 \paragraph{Entschlüsseln} ~\\
 Sobald B eine Nachricht von A empfangen hat, kann B den Schlüssel $k$ aus $\alpha$  und aus $b$ wie folgt bestimmen: $k = \alpha^b \in \mathbb{G}$. Diese Beziehung gilt, da $\alpha^b = g^{ab} \in \mathbb{G}$ in der gewählten Gruppe äquivalent ist zu $\beta^a = g^{ba} \in \mathbb{G}$.
@@ -31,10 +35,10 @@ Für unser Beispiel wählen wir wie üblich eine zyklische Restklassengruppe $\m
 Konkret wählen wir die Gruppe $\mathbb{G} = (\mathbb{Z} / 47\mathbb{Z})^\times$ und wie schon im Beispiel zum Babystep"=Giantstep"=Algorithmus stellt sich heraus, dass $g=5$ ein geeigneter Erzeuger unserer zyklischen Gruppe ist. Anschließend werden die Parameter, welche die Gruppe definieren, $p=47$ und $g=5$ veröffentlicht.
 
 \paragraph{Erzeugung der Schlüssel} ~\\
-Teilnehmer B wählt $b = 29 \in \{1,..,p-1\}$ als privaten Schlüssel und berechnet daraus seinen öffentlichen Schlüssel $\beta = g^b = 26 \equiv 5^{29} \; mod \; 47$. Im Anschluss veröffentlicht B den öffentlichen Schlüssel.
+Teilnehmer B wählt $b = 29 \in \{1,...,p-1\}$ als privaten Schlüssel und berechnet daraus seinen öffentlichen Schlüssel $\beta = g^b = 26 \equiv 5^{29} \; mod \; 47$. Im Anschluss veröffentlicht B den öffentlichen Schlüssel.
 
 \paragraph{Verschlüsseln} ~\\
-In unserem Beispiel möchte Teilnehmer A die Nachricht $m=42$ an B senden. Dazu wählt Teilnehmer A das zufällige Element $a = 7 \in \{1,..,p-1\}$ und berechnet daraus das Gruppenelement $\alpha = g^a = 11 \equiv 5^7 \; mod \; 47$. Anschließend bestimmt A den Schlüssel $k = \beta^a = 10 \equiv 26^7 \; mod \; 47$.
+In unserem Beispiel möchte Teilnehmer A die Nachricht $m=42$ an B senden. Dazu wählt Teilnehmer A das zufällige Element $a = 7 \in \{1,...,p-1\}$ und berechnet daraus das Gruppenelement $\alpha = g^a = 11 \equiv 5^7 \; mod \; 47$. Anschließend bestimmt A den Schlüssel $k = \beta^a = 10 \equiv 26^7 \; mod \; 47$.
 
 Wie im ursprünglichen ElGamal"=Schema wenden wir nun die die Funktion $f_k$ auf $m$ an, um den Geheimtext $c$ zu erhalten:
 $c = f_{10}(42) = 44 \equiv 10*42 \; mod \; 47$. Daraufhin übermittelt A den Geheimtext $c=44$ an B.
@@ -74,8 +78,8 @@ wie sich zeigt, ist dies --- wie zu erwarten war --- die richtige Antwort.
 \subsubsection{Sicherheit}
 Bevor wir mit dem eigentlichen Sicherheitbeweis beginnen, wollen wir noch einmal kurz das Decisional"=Diffie"=Hellman"=Problem (oder auch kurz DDH) erläutern, da dies direkt in Bezug zum diskreten Logarithmus"=Problem steht und für den nachfolgenden Sicherheitbeweis von entscheidender Bedeutung ist.
 
-Das DDH"=Problem befasst sich mit der Schwierigkeit, zu entscheiden, ob eine Zahl eine bestimmte Form erfüllt. Die Annahme besagt nun, dass dieses Problem für bestimmte Gruppen schwer ist, es existiert also kein probabilistischer Polynomialzeitalgorithmus (oder auch kurz $\mathsf{PPT}$ für probabilistic polynomial time) mit kleiner Fehlerwahrscheinlichkeit, der dieses Problem löst. Auch wenn die sogenannten Diffie"=Hellman"=Probleme eng mit dem diskreten Logarithmus"=Problem verwandt sind, ist nicht bekannt ob diese auch äquivalent sind. [... 320] % modern crypto
-
+Das DDH"=Problem befasst sich mit der Schwierigkeit, zu entscheiden, ob eine Zahl eine bestimmte Form erfüllt. Die Annahme besagt nun, dass dieses Problem für bestimmte Gruppen schwer ist, es existiert also kein probabilistischer Polynomialzeitalgorithmus (oder auch kurz $\mathsf{PPT}$ für probabilistic polynomial time) mit kleiner Fehlerwahrscheinlichkeit, der dieses Problem löst. Auch wenn die sogenannten Diffie"=Hellman"=Probleme eng mit dem diskreten Logarithmus"=Problem verwandt sind, ist nicht bekannt ob diese auch äquivalent sind.
+\reference{\hyperref[ref_1]{1}, S. 320}
 
 Nachfolgenden verwenden wir folgende Notationen: Mit $\mathcal{G}$ bezeichnen wir einen Algorithmus zu Erzeugung von Gruppen.
 Sei nun nachfolgend $\mathcal{G}$ ein $\mathsf{PPT}$ Algorithmus, welcher einen Sicherheitsparameter $1^n$ entgegen nimmt und als Ausgabe eine vollständige Beschreibung einer zyklischen Gruppe $\mathbb{G}$, deren Ordnung $q$ und einen Generator $g$ liefert. Das DDH"=Problem wird nun wie folgt definiert:
@@ -94,10 +98,12 @@ werden zufällig gewählt.
 Der Ursprung des Parameters $1^n$ ist vielleicht nicht sofort offensichtlich, deshalb wollen wir an dieser Stelle eine kurze Erläuterung wiedergeben:
 \begin{quote}
 \textbf{The} $1^n$ \textbf{hack}
-Notice the presence of a rather mysterious"=looking $1^n$ as an input parameter to many algorithms [...]. This is a common ``hack'' found in complexity"=theory literature. We want the running time of these algorithms to by polynomial"=time in the security parameter $n$ -- by passing $1^n$ as a parameter, we ensure that the input length is of length at least $n$; and hence the algorithm gets to run for time polynomial in $n$. [...] % TODO http://drona.csa.iisc.ernet.in/~arpita/Cryptography15/Scribe1.pdf
+Notice the presence of a rather mysterious"=looking $1^n$ as an input parameter to many algorithms [...]. This is a common ``hack'' found in complexity"=theory literature. We want the running time of these algorithms to by polynomial"=time in the security parameter $n$ -- by passing $1^n$ as a parameter, we ensure that the input length is of length at least $n$; and hence the algorithm gets to run for time polynomial in $n$.
+\reference{\hyperref[ref_3]{3}}
 \end{quote}
 
-Bevor wir uns wieder dem DDH"=Problem zuwenden, wollen wir noch ein kurzes Lemma einführen. Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ ein zufälliges Element. Das Lemma besagt nun, dass die Multiplikation von $m$ mit einem zufälligen Element $k$ der Gruppe, zu gleichmäßig verteilten Elementen $k'$ der Gruppe führt. Somit ist die Verteilung der $k'$ nicht von $m$ abhängig und damit kann aus $k'$ keine Information gewonnen werden, welche Rückschlüsse auf $m$ zulässt. [... S400] % TODO modern crypto seite 400
+Bevor wir uns wieder dem DDH"=Problem zuwenden, wollen wir noch ein kurzes Lemma einführen. Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ ein zufälliges Element. Das Lemma besagt nun, dass die Multiplikation von $m$ mit einem zufälligen Element $k$ der Gruppe, zu gleichmäßig verteilten Elementen $k'$ der Gruppe führt. Somit ist die Verteilung der $k'$ nicht von $m$ abhängig und damit kann aus $k'$ keine Information gewonnen werden, welche Rückschlüsse auf $m$ zulässt.
+\reference{\hyperref[ref_1]{1}, S. 400}
 
 \begin{lemma}\label{lemma_verteilung}
 Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ willkürlich gewählt. Wird $k \gets \mathbb{G}$ zufällig gewählt und ist $k' := k*m$, dann erhält man die selbe Verteilung für $k'$, als wenn $k' \gets \mathbb{G}$ gewählt wird.
@@ -118,7 +124,9 @@ Da $g$ gleichmäßig per Zufall aus $\mathbb{G}$ gewählt wurde, ist die Wahrsch
 \end{proof}
 \bigskip
 
-Dieses soeben bewiesene Lemma lässt sich dazu nutzen, ein perfekt sicheres Verschlüsselungsverfahren mit $\mathbb{G}$ als Nachrichtenraum zu konstruieren. Sender und Empfänger teilen sich den geheimen Schlüssel $k \gets \mathbb{G}$. Eine Nachricht $m \in \mathbb{G}$ kann nun einfach mit $c := k*m$ verschlüsselt und mit $m := c/k$ entschlüsselt werden. [... S. 400] Ein solches Verfahren wäre einfach eine Umsetzung des One"=Time"=Pad Schemas.
+Dieses soeben bewiesene Lemma lässt sich dazu nutzen, ein perfekt sicheres Verschlüsselungsverfahren mit $\mathbb{G}$ als Nachrichtenraum zu konstruieren. Sender und Empfänger teilen sich den geheimen Schlüssel $k \gets \mathbb{G}$. Eine Nachricht $m \in \mathbb{G}$ kann nun einfach mit $c := k*m$ verschlüsselt und mit $m := c/k$ entschlüsselt werden.
+\reference{\hyperref[ref_1]{1}, S. 400}
+Ein solches Verfahren wäre einfach eine Umsetzung des One"=Time"=Pad Schemas.
 
 Für den anschließenden Sicherheitbeweis wollen wir nun noch eine formale Beschreibung des ElGamal"=Verschlüsselungsverfahrens angeben, welches aus den drei Algorithmen $\mathsf{Gen}$, $\mathsf{Enc}$ und $\mathsf{Dec}$ besteht. In Zukunft bezeichnen wir ein Verschlüsselungsverfahren bestehend aus diesen drei Algorithmen mit $\Pi$.
 \paragraph{Formale Beschreibung des Verfahrens}
@@ -178,7 +186,11 @@ $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\tilde{\Pi}}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2}.
 $$
 
-Nun wollen wir folgenden $\mathsf{PPT}$ Algorithmus $D$ betrachten, welcher das gegebene DDH"=Problem relativ zu $\mathcal{G}$ zu lösen versucht. Der Algorithmus $D$ erhält das Tupel $(\mathbb{G},q,g,h_1,h_2,h_3)$, es gilt: $h_1=g^x$, $h_2=g^y$ und $h_3$ ist entweder $g^{xy}$ oder $g^z$, wenn $x$, $y$ und $z$ zufällig gewählt wurden. Der Algorithmus $D$ sollte nun herausfinden, welcher dieser beiden Fälle zutrifft.
+Nun wollen wir einen $\mathsf{PPT}$ Algorithmus $D$ betrachten, welcher das gegebene DDH"=Problem relativ zu $\mathcal{G}$ zu lösen versucht. Der Algorithmus $D$ erhält das Tupel
+$$
+(\mathbb{G},q,g,h_1,h_2,h_3),
+$$
+dabei gilt: $h_1=g^x$, $h_2=g^y$ und $h_3$ ist entweder $g^{xy}$ oder $g^z$, wenn $x$, $y$ und $z$ zufällig gewählt wurden. Der Algorithmus $D$ sollte nun herausfinden, welcher dieser beiden Fälle zutrifft.
 
 \paragraph{Der Algorithmus $D$}
 \begin{tabbing}
@@ -239,7 +251,8 @@ Dies impliziert $\mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) 
 \subsubsection{Praxis}
 Das ElGamal"=Verschlüsselungsverfahren wird auch in der Praxis eingesetzt, so wird es beispielsweise von GnuPG angeboten. Für einen gewissen Zeitraum war das ElGamal"=Verfahren sogar als Voreinstellung in GnuPG gesetzt.
 
-Das Verfahren hat allerdings auch Nachteile, wie beispielsweise der Nachrichtenraum, welcher durch die gewählt Gruppe $\mathbb{G}$ bestimmt wird. Für manche Gruppen ist es jedoch möglich eine umkehrbare Kodierung von Gruppenelementen zu Bitstrings zu definieren und dieses Problem damit zu umgehen. [... S. 404] % TODO modern crypto
+Das Verfahren hat allerdings auch Nachteile, wie beispielsweise der Nachrichtenraum, welcher durch die gewählt Gruppe $\mathbb{G}$ bestimmt wird. Für manche Gruppen ist es jedoch möglich eine umkehrbare Kodierung von Gruppenelementen zu Bitstrings zu definieren und dieses Problem damit zu umgehen.
+\reference{\hyperref[ref_1]{1}, S. 404}
 
-Weiterhin ist das Verfahren sehr rechenintensiv, da häufig starker Pseudozufallszahlen generiert werden müssen. Es ist daher auch nicht besonders zur Verschlüsselung großer Datenmengen geeignet. Hier bietet es sich an das ElGamal-Verfahren nur zur Verschlüsselung eines Schlüssels zu verwenden, welcher wiederum für ein symmetrisches Verfahren genutzt wird. Ein solches Konstrukt wird als hybrides Verschlüsselungverfahren bezeichnet. [...] % TODO https://www.cs.utexas.edu/~rashid/395Tcrypt/2_1.pdf
-
+Weiterhin ist das Verfahren sehr rechenintensiv, da häufig starker Pseudozufallszahlen generiert werden müssen. Es ist daher auch nicht besonders zur Verschlüsselung großer Datenmengen geeignet. Hier bietet es sich an das ElGamal-Verfahren nur zur Verschlüsselung eines Schlüssels zu verwenden, welcher wiederum für ein symmetrisches Verfahren genutzt wird. Ein solches Konstrukt wird als hybrides Verschlüsselungverfahren bezeichnet.
+\reference{\hyperref[ref_4]{4}}

@@ -14,6 +14,7 @@ g^j = \alpha(g^{-m})^i
 Der Algorithmus betrachtet nun beide Seiten dieser Gleichung getrennt und teilt sich somit in zwei Phasen.
 In der ersten Phase werden alle $g^j$ berechnet und die jeweiligen Paare $(j, g^j)$, welche als "`baby steps"'
 bezeichnet werden, werden in einer Tabelle gespeichert. Anschließend werden die "`giant steps"' bestimmt, hierbei wird der Wert des Ausdrucks $(g^{-m})^i$ für alle $i$ mit $0 \leq i < m$ bestimmt und mit den Einträgen der Tabelle verglichen. Wird für ein $i$ ein Eintrag gefunden, der die Gleichung (1) erfüllt, wird $x$ mit $x=im+j$ ausgegeben.
+\reference{\hyperref[ref_1]{1}, S. 352}
 
 Für eine spätere Implementierung bietet es sich an, sich folgende Umformung zu nutze zu machen: $\alpha(g^{-m})^i = \alpha(g^{-m})^{i-1}g^{-m}$.
 Der Berechnungsaufwand kann hierdurch etwas reduziert werden, da das Ergebnis der aktuellen Iteration aus dem vorgehenden Schritt bestimmt werden kann. Das Potenzieren mit $i$ während der Iterationen kann somit entfallen.
@@ -92,4 +93,4 @@ Die Anweisungen 4.2 und 4.3 sind hingegen wieder Elementar, also in $\mathcal{O}
 Daraus resultiert schließlich eine Gesamtlaufzeit von $\mathcal{O}(m)$ bzw. $\mathcal{O}(\sqrt{n})$, was eine wesentliche Verbesserung der naiven Vorgehensweise zur Bestimmung des diskreten Logarithmus darstellt.
 
 \subsubsection{Speicherverbrauch}
-Der Speicherverbrauch des Babystep"=Giantstep"=Algorithmus wird im Wesentlichen nur von der Tabelle bestimmt, welche $m$-Einträgen nach Berechnung der Babysteps besitzt im weiteren Verlauf des Algorithmus muss, abgesehen von temporären Variablen, kein weiterer Speicher mehr alloziert werden. Der gesamte Speicherbedarf liegt somit in $\mathcal{O}(m)$.
+Der Speicherverbrauch des Babystep"=Giantstep"=Algorithmus wird im Wesentlichen nur von der Tabelle bestimmt, welche $m$-Einträgen nach Berechnung der Babysteps besitzt im weiteren Verlauf des Algorithmus muss, abgesehen von temporären Variablen, kein weiterer Speicher mehr alloziert werden. Der gesamte Speicherbedarf liegt somit in $\mathcal{O}(m)$ bzw. $\mathcal{O}(\sqrt{n})$. \reference{\hyperref[ref_1]{1}, S. 353}

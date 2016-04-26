@@ -1,7 +1,7 @@
 % Autor: Josef
 Offensichtlich kann der diskrete Logarithmus als Umkehrfunktion der diskreten Exponentialfunktion nicht direkt bestimmt werden. Ein naiver Ansatz, um den diskreten Logarithmus zu einem gegeben Element einer Gruppe zu bestimmen, wäre es alle Potenzen eines gegeben Erzeugers der zyklischen Gruppe der Reihe nach zu bestimmen und das Ergebnis zu vergleichen, bis die entsprechende Potenz gefunden wurde.
 
-Dieser Ansatz ist allerdings nur bei sehr kleinen zyklischen Gruppen zielführend, da die Laufzeit direkt von der Ordnung der Gruppe bestimmt wird. Für eine gegeben Gruppe $\mathbb{G}$ ergibt sich also ein Laufzeit in $\mathcal{O}(ord(\mathbb{G}))$.
+Dieser Ansatz ist allerdings nur bei sehr kleinen zyklischen Gruppen zielführend, da die Laufzeit direkt von der Ordnung der Gruppe bestimmt wird. Für eine gegebene Gruppe $\mathbb{G}$ ergibt sich also ein Laufzeit in $\mathcal{O}(ord(\mathbb{G}))$.
 
 Aus diesem Grund soll im Nachfolgenden eine Auswahl an Algorithmen vorgestellt werden, welche das gegebene Problem, den diskreten Logarithmus zu bestimmen, lösen und eine bessere Laufzeitkomplexität besitzen.
 

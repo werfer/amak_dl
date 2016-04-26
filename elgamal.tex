@@ -3,9 +3,9 @@ Aus der Begebenheit, dass zur Bestimmung des diskreten Logarithmus kein derzeit 
 
 Hierzu noch eine kurze Erläuterung: Das ElGamal"=Verschlüsselungsverfahren nutzt einen öffentlichen und einen geheimen Schlüssel. Der öffentliche Schlüssel dient dem Verschlüsseln von Nachrichten und darf veröffentlicht werden. Der geheime Schlüssel wird dazu genutzt, empfangene Nachrichten zu entschlüsseln. Der geheime Schlüssel darf natürlich nur dem Empfänger der Nachricht bekannt sein.
 
-Weiterhin ist anzumerken, dass das ElGamal"=Verfahren eng mit dem Diffie"=Hellman"=Schema verwandt ist. Dies ist kein Zufall, den Taher El Gamal erkannte 1985, dass das Diffie"=Hellman Schlüsselaustauschverfahren zu einem Public"=Key Verschlüsselungsverfahren erweitert werden kann.
+Weiterhin ist anzumerken, dass das ElGamal"=Verfahren eng mit dem Diffie"=Hellman"=Schema verwandt ist. Dies ist kein Zufall, denn Taher El Gamal erkannte 1985, dass das Diffie"=Hellman"=Schlüsselaustauschverfahren zu einem Public"=Key"=Verschlüsselungsverfahren erweitert werden kann.
 \reference{\hyperref[ref_1]{1}, S. 400}
-Das Diffie"=Hellman Schlüsselaustauschverfahren soll allerdings hier nicht weiter erläutert werden.
+Das Diffie"=Hellman"=Schlüsselaustauschverfahren soll allerdings hier nicht weiter erläutert werden.
 
 \subsubsection{Beschreibung des Verfahrens}
 Im Nachfolgenden gehen wir davon aus, dass A eine Nachricht an B senden will, wir bezeichnen also den Sender mit A sowie den Empfänger mit B.
@@ -13,26 +13,26 @@ Im Nachfolgenden gehen wir davon aus, dass A eine Nachricht an B senden will, wi
 \paragraph{Wahl der Parameter} ~\\
 Beide Teilnehmer müssen sich über eine zyklische Gruppe $\mathbb{G} = \langle g \rangle$ der Ordnung $p$ einigen, sowohl $\mathbb{G}$ als auch der Erzeuger $g$ werden öffentlich gemacht.
 \reference{\hyperref[ref_2]{2}, S. 147}
-Das National Institute of Standards and Technology (oder kurz NIST) hat eine Auswahl an empfohlenen Parametern veröffentlicht.
+Das National Institute of Standards and Technology (oder kurz NIST) hat hierzu eine Auswahl an empfohlenen Parametern veröffentlicht.
 \reference{\hyperref[ref_1]{1}, S. 404}
 
 \paragraph{Erzeugung der Schlüssel} ~\\
-Der Empfänger muss zunächst eine zufällige natürlich Zahl $b \in \{1,...,p-1\}$ als geheimen Schlüssel wählen. Anschließend erzeugt der Empfänger B seinen öffentlichen Schlüssel. Er berechnet hierfür das Gruppenelement $\beta = g^b \in \mathbb{G}$ und gibt dieses bekannt.
+Der Empfänger muss zunächst eine zufällige natürliche Zahl $b \in \{1,...,p-1\}$ als geheimen Schlüssel wählen. Anschließend erzeugt der Empfänger B seinen öffentlichen Schlüssel. Er berechnet hierfür das Gruppenelement $\beta = g^b \in \mathbb{G}$ und gibt dieses bekannt.
 
 \paragraph{Verschlüsseln} ~\\
-Möchte nun A eine Nachricht $m \in \mathbb{G}$ an B senden, muss A zunächst eine zufällige natürlich Zahl $a \in \{1,...,p-1\}$ wählen und daraus das Gruppenelement $\alpha = g^a \in \mathbb{G}$ berechnen. Anschließend bestimmt A den Schlüssel $k = \beta^a \in \mathbb{G}$. A wendet nun einen Verschlüsselungalgorithmus $f$ unter Verwendung des Schlüssel $k$ auf die Nachricht $m$ an. Den resultierenden Geheimtext $c = f_k(m) \in \mathbb{G}$ sowie das Element $\alpha$ sendet A an B.
+Möchte nun A eine Nachricht $m \in \mathbb{G}$ an B senden, muss A zunächst eine zufällige natürlich Zahl $a \in \{1,...,p-1\}$ wählen und daraus das Gruppenelement $\alpha = g^a \in \mathbb{G}$ berechnen. Anschließend bestimmt A den Schlüssel $k = \beta^a \in \mathbb{G}$. A wendet nun einen Verschlüsselungsalgorithmus $f$ unter Verwendung des Schlüssel $k$ auf die Nachricht $m$ an. Den resultierenden Geheimtext $c = f_k(m) \in \mathbb{G}$ sowie das Element $\alpha$ sendet A an B.
 Im ursprünglichen ElGamal"=Schema wurde $f$ definiert als: $f_k(x) = k*x \; mod \; p$ in einer primen Restklassengruppe der Ordnung $p$.
 \reference{\hyperref[ref_2]{2}, S. 147}
 
 \paragraph{Entschlüsseln} ~\\
 Sobald B eine Nachricht von A empfangen hat, kann B den Schlüssel $k$ aus $\alpha$  und aus $b$ wie folgt bestimmen: $k = \alpha^b \in \mathbb{G}$. Diese Beziehung gilt, da $\alpha^b = g^{ab} \in \mathbb{G}$ in der gewählten Gruppe äquivalent ist zu $\beta^a = g^{ba} \in \mathbb{G}$.
-Damit kann nun der Geheimtext entschlüsselt werden, indem einfach die Umkehrfunktion $f_k^{-1}$ des Verschlüsselungalgorithmus angewendet wird.
+Damit kann nun der Geheimtext entschlüsselt werden, indem einfach die Umkehrfunktion $f_k^{-1}$ des Verschlüsselungsalgorithmus angewandt wird.
 
 \subsubsection{Beispiel}
 
 \paragraph{Wahl der Parameter} ~\\
-Für unser Beispiel wählen wir wie üblich eine zyklische Restklassengruppe $\mathbb{G} := (\mathbb{Z} / p\mathbb{Z})^\times$, mit $p$ prim.
-Konkret wählen wir die Gruppe $\mathbb{G} = (\mathbb{Z} / 47\mathbb{Z})^\times$ und wie schon im Beispiel zum Babystep"=Giantstep"=Algorithmus stellt sich heraus, dass $g=5$ ein geeigneter Erzeuger unserer zyklischen Gruppe ist. Anschließend werden die Parameter, welche die Gruppe definieren, $p=47$ und $g=5$ veröffentlicht.
+Für unser Beispiel wählen wir wie üblich eine zyklische Restklassengruppe $\mathbb{G} := (\mathbb{Z} /p \mathbb{Z})^\times$, mit $p$ prim.
+Konkret wählen wir die Gruppe $\mathbb{G} = (\mathbb{Z} /47 \mathbb{Z})^\times$ und wie schon im Beispiel zum Babystep"=Giantstep"=Algorithmus stellt sich heraus, dass $g=5$ ein geeigneter Erzeuger unserer zyklischen Gruppe ist. Anschließend werden die Parameter $p=47$ und $g=5$, welche die Gruppe definieren, veröffentlicht.
 
 \paragraph{Erzeugung der Schlüssel} ~\\
 Teilnehmer B wählt $b = 29 \in \{1,...,p-1\}$ als privaten Schlüssel und berechnet daraus seinen öffentlichen Schlüssel $\beta = g^b = 26 \equiv 5^{29} \; mod \; 47$. Im Anschluss veröffentlicht B den öffentlichen Schlüssel.
@@ -44,7 +44,7 @@ Wie im ursprünglichen ElGamal"=Schema wenden wir nun die die Funktion $f_k$ auf
 $c = f_{10}(42) = 44 \equiv 10*42 \; mod \; 47$. Daraufhin übermittelt A den Geheimtext $c=44$ an B.
 
 \paragraph{Entschlüsseln} ~\\
-Der Empfänger B berechnet zunächst den Schlüssel $k = \alpha^b = 10 \equiv 11^{29} \; mod \; 47$. Mit der Umkehrfunktion $f_{10}^{-1}(x) = 10^{-1} * x \; mod \; 47$ lässt sich nun die ursprüngliche Nachricht m berechnen. Allerdings müssen wir zuerst das multiplikative Inverse von 10 in unserer Gruppe $\mathbb{G}$ bestimmen. Dazu lösen wir mit Hilfe des erweiterten Euklidischen Algorithmus die Diphanatische Gleichung $10x + 47y = 1$.
+Der Empfänger B berechnet zunächst den Schlüssel $k = \alpha^b = 10 \equiv 11^{29} \; mod \; 47$. Mit der Umkehrfunktion $f_{10}^{-1}(x) = 10^{-1} * x \; mod \; 47$ lässt sich nun die ursprüngliche Nachricht $m$ berechnen. Allerdings müssen wir zuerst das multiplikative Inverse von 10 in unserer Gruppe $\mathbb{G}$ bestimmen. Dazu lösen wir mit Hilfe des erweiterten Euklidischen Algorithmus die diphanatische Gleichung $10x + 47y = 1$.
 
 {\renewcommand{\arraystretch}{1.5}
 \begin{table}[H]
@@ -82,15 +82,15 @@ Das DDH"=Problem befasst sich mit der Schwierigkeit, zu entscheiden, ob eine Zah
 \reference{\hyperref[ref_1]{1}, S. 320}
 
 Nachfolgenden verwenden wir folgende Notationen: Mit $\mathcal{G}$ bezeichnen wir einen Algorithmus zu Erzeugung von Gruppen.
-Sei nun nachfolgend $\mathcal{G}$ ein $\mathsf{PPT}$ Algorithmus, welcher einen Sicherheitsparameter $1^n$ entgegen nimmt und als Ausgabe eine vollständige Beschreibung einer zyklischen Gruppe $\mathbb{G}$, deren Ordnung $q$ und einen Generator $g$ liefert. Das DDH"=Problem wird nun wie folgt definiert:
+Sei nun $\mathcal{G}$ ein $\mathsf{PPT}$"=Algorithmus, welcher einen Sicherheitsparameter $1^n$ entgegen nimmt und als Ausgabe eine vollständige Beschreibung einer zyklischen Gruppe $\mathbb{G}$, deren Ordnung $q$ und einen Generator $g$ liefert. Das DDH"=Problem wird nun wie folgt definiert:
 
 \begin{definition}
-Wir sagen, dass ein DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, wenn für alle $\mathsf{PPT}$ Algorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, sodass:
+Wir sagen, dass ein DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, wenn für alle $\mathsf{PPT}$"=Algorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, sodass:
 $$
 \Big| \mathrm{Pr}[ \mathcal{A}( \mathbb{G}, q, g, g^x, g^y, g^z) = 1 ] -
 \mathrm{Pr}[ \mathcal{A}( \mathbb{G}, q, g, g^x, g^y, g^{xy}) = 1 ] \Big| \leq \mathsf{negl}(n),
 $$
-wobei in beiden Fällen die Wahrscheinlichkeiten über ein Experiment berechnet wird, dass ein Tupel $(\mathbb{G},q,g)$ als Ausgabe von $\mathcal{G}(1^n)$ bestimmt. Die $x,y,z \in (\mathbb{Z} / q\mathbb{Z})^\times$
+wobei in beiden Fällen die Wahrscheinlichkeiten über ein Experiment berechnet wird, dass ein Tupel $(\mathbb{G},q,g)$ als Ausgabe von $\mathcal{G}(1^n)$ bestimmt. Die $x,y,z \in (\mathbb{Z} /q \mathbb{Z})^\times$
 werden zufällig gewählt.
 \end{definition}
 \bigskip
@@ -111,7 +111,7 @@ Anders gesagt, gilt für alle $\hat{g} \in \mathbb{G}$:
 $$
 \mathrm{Pr}[k*m=\hat{g}]=1/|\mathbb{G}|,
 $$
-wobei die die Wahrscheinlichkeit durch eine zufälligen Wahl von $k \in \mathbb{G}$ bestimmt wird.
+wobei die die Wahrscheinlichkeit durch eine zufällige Wahl von $k \in \mathbb{G}$ bestimmt wird.
 \end{lemma}
 
 \begin{proof}
@@ -126,14 +126,14 @@ Da $g$ gleichmäßig per Zufall aus $\mathbb{G}$ gewählt wurde, ist die Wahrsch
 
 Dieses soeben bewiesene Lemma lässt sich dazu nutzen, ein perfekt sicheres Verschlüsselungsverfahren mit $\mathbb{G}$ als Nachrichtenraum zu konstruieren. Sender und Empfänger teilen sich den geheimen Schlüssel $k \gets \mathbb{G}$. Eine Nachricht $m \in \mathbb{G}$ kann nun einfach mit $c := k*m$ verschlüsselt und mit $m := c/k$ entschlüsselt werden.
 \reference{\hyperref[ref_1]{1}, S. 400}
-Ein solches Verfahren wäre einfach eine Umsetzung des One"=Time"=Pad Schemas.
+Ein solches Verfahren wäre einfach eine Umsetzung des One"=Time"=Pad"=Schemas.
 
 Für den anschließenden Sicherheitbeweis wollen wir nun noch eine formale Beschreibung des ElGamal"=Verschlüsselungsverfahrens angeben, welches aus den drei Algorithmen $\mathsf{Gen}$, $\mathsf{Enc}$ und $\mathsf{Dec}$ besteht. In Zukunft bezeichnen wir ein Verschlüsselungsverfahren bestehend aus diesen drei Algorithmen mit $\Pi$.
 \paragraph{Formale Beschreibung des Verfahrens}
 \begin{itemize}
- \item $\mathsf{Gen}$: Die Eingabe des Schlüsselerzeugungsalgorithmus ist ein Sicherheitsparameter $1^n$. Damit wird der Gruppenerzeugungsalgorithmus $\mathcal{G}(1^n)$ ausgeführt, um $(\mathbb{G},q,g)$ zu erhalten. Wähle ein zufälliges $x \in (\mathbb{Z} / q\mathbb{Z})^\times$
+ \item $\mathsf{Gen}$: Die Eingabe des Schlüsselerzeugungsalgorithmus ist ein Sicherheitsparameter $1^n$. Damit wird der Gruppenerzeugungsalgorithmus $\mathcal{G}(1^n)$ ausgeführt, um $(\mathbb{G},q,g)$ zu erhalten. Wähle ein zufälliges $x \in (\mathbb{Z} /q \mathbb{Z})^\times$
  und berechne $h := g^x$. Der öffentliche Schlüssel ist gegeben durch $\langle \mathbb{G},q,g,h \rangle$ und der private Schlüssel mit $\langle \mathbb{G},q,g,x \rangle$. Der Nachrichtenraum ist $\mathbb{G}$.
- \item $\mathsf{Enc}$: Der Verschlüsselungalgorithmus nimmt den öffentlichen Schlüssel $pk$ mit $pk = \langle \mathbb{G},q,g,x \rangle$ und eine Nachricht $m \in \mathbb{G}$ entgegen. Es wird ein zufälliges Element $y \in (\mathbb{Z} / q\mathbb{Z})^\times$
+ \item $\mathsf{Enc}$: Der Verschlüsselungsalgorithmus nimmt eine Nachricht $m \in \mathbb{G}$ und den öffentlichen Schlüssel $pk = \langle \mathbb{G},q,g,x \rangle$ entgegen. Es wird ein zufälliges Element $y \in (\mathbb{Z} /q \mathbb{Z})^\times$
  gewählt und als Ausgabe folgender Geheimtext erzeugt:
  $$
  \langle g^y, h^y * m \rangle.
@@ -144,17 +144,21 @@ Für den anschließenden Sicherheitbeweis wollen wir nun noch eine formale Besch
  $$
 \end{itemize}
 \noindent
-Das Public"=Key Experiment, auf das wir uns nachfolgend beziehen, kann für ein gegebenes Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec)}$ und einen Angreifer $\mathcal{A}$, welcher einen Abhörversuch unternimmt, wie folgt beschrieben werden:
+Das Public"=Key"=Experiment, auf das wir uns nachfolgend beziehen, kann für ein gegebenes Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec)}$ und einen Angreifer $\mathcal{A}$, welcher einen Abhörversuch unternimmt, wie folgt beschrieben werden:
 \paragraph{Das Ununterscheidbarkeitsexperiment $\mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n)$:}
 \begin{itemize}
  \item $\mathsf{Gen}(1^n)$ wird ausgeführt, um ein Schlüsselpaar $(pk, sk)$ zu erhalten.
  \item Der Angreifer $\mathcal{A}$ erhält den öffentlichen Schlüssel $pk$. Dieser generiert daraufhin zwei Nachrichten gleicher Länge: $m_0$ und $m_1$.
- \item Es wird ein zufälliges Bit $b \in \{0, 1\}$ gewählt, woraufhin der Geheimtext $c \gets \mathsf{Enc}_{pk}(m_b)$ bestimmt wird und an $\mathcal{A}$ übergeben wird.
+ \item Es wird ein zufälliges Bit $b \in \{0, 1\}$ gewählt, woraufhin der Geheimtext
+ $$
+ c \gets \mathsf{Enc}_{pk}(m_b)
+ $$
+ bestimmt wird und an $\mathcal{A}$ übergeben wird.
  \item $\mathcal{A}$ gibt ein Bit $b'$ aus. Das Experiment gibt nun 1 zurück wenn $b' = b$ ansonsten 0. Wobei der Angreifer $\mathcal{A}$ Erfolg hatte, wenn $b' = b$ gilt.
 \end{itemize}
 
 \begin{definition}
-Das Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec})$ besitzt nicht zu unterscheidende Geheimtexte aus Sicht eines Abhörers, wenn für alle $\mathsf{PPT}$ Angriffsalgorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, für die gilt:
+Das Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec})$ besitzt nicht zu unterscheidende Geheimtexte aus Sicht eines Abhörers, wenn für alle $\mathsf{PPT}$"=Angriffsalgorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, für die gilt:
 $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2} + \mathsf{negl}(n).
 $$
@@ -163,30 +167,30 @@ $$
 Nun haben wir alle Vorbereitungen getroffen und können nachfolgend die Sicherheit dieses Verfahrens in Bezug auf das DDH"=Problem beweisen.
 
 \begin{theorem}
-Wenn das DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, dann generiert das ElGamal"=Verschlüsselungsverfahren nicht zu unterscheidende Geheimtexte unter Angriffen mit ausgewählten Klartexten. Anders gesagt das Verfahren garantiert die Ununterscheidbarkeit von Geheimtexten.
+Wenn das DDH"=Problem schwer in Bezug auf $\mathcal{G}$ ist, dann generiert das ElGamal"=Verschlüsselungsverfahren nicht zu unterscheidende Geheimtexte unter Angriffen mit ausgewählten Klartexten. Anders gesagt: das Verfahren garantiert die Ununterscheidbarkeit von Geheimtexten.
 \end{theorem}
 
 \begin{proof}
 Sei $\Pi$ das ElGamal"=Verschlüsselungsverfahren. Wir zeigen nachfolgend, dass $\Pi$ nicht zu unterscheidende Geheimtexte unter Anwesenheit eines Beobachters generiert.
 
-Sei $\mathcal{A}$ ein $\mathsf{PPT}$ Algorithmus, welcher die Rolle des Angreifers übernimmt. Nun wollen wir zeigen, dass eine zu vernachlässigende Funktion $\mathsf{negl}$ existiert, sodass gilt:
+Sei $\mathcal{A}$ ein $\mathsf{PPT}$"=Algorithmus, welcher die Rolle des Angreifers übernimmt. Nun wollen wir zeigen, dass eine zu vernachlässigende Funktion $\mathsf{negl}$ existiert, sodass gilt:
 $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2} + \mathsf{negl}(n).
 $$
-Nun führen wir das modifizierte "`Verschlüsselungsverfahren"' $\tilde{\Pi}$ ein, dies besitzt die Eigenschaft, dass $\mathsf{Gen}$ identisch zur Beschreibung in $\Pi$ ist, die Verschlüsselung einer Nachricht $m$ mit dem öffentlichen Schlüssel $\langle \mathbb{G}, q, g, h \rangle$ wird allerdings mit zufällig gewählten $y,z \in (\mathbb{Z} / q\mathbb{Z})^\times$
+Nun führen wir das modifizierte "`Verschlüsselungsverfahren"' $\tilde{\Pi}$ ein, dies besitzt die Eigenschaft, dass $\mathsf{Gen}$ identisch zur Beschreibung in $\Pi$ ist, die Verschlüsselung einer Nachricht $m$ mit dem öffentlichen Schlüssel $\langle \mathbb{G}, q, g, h \rangle$ wird allerdings mit zufällig gewählten $y,z \in (\mathbb{Z} /q \mathbb{Z})^\times$
 durchgeführt. Der ausgegebene Geheimtext hat die Form:
 $$
 \langle g^y, g^z*m \rangle.
 $$
-Es zeigt sich, dass $\tilde{\Pi}$ kein Verschlüsselungsverfahren ist, da für einen Empfänger keine Möglichkeit besteht den empfangen Geheimtext zu entschlüsseln. Das Experiment $\mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n)$ ist allerdings dennoch wohldefiniert, da das Experiment lediglich von der Erzeugung der Schlüssel und dem Entschlüsselungsalgorithmus abhängig ist.
+Es zeigt sich, dass $\tilde{\Pi}$ kein Verschlüsselungsverfahren ist, da für einen Empfänger keine Möglichkeit besteht, den empfangen Geheimtext zu entschlüsseln. Das Experiment $\mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n)$ ist allerdings dennoch wohldefiniert, da das Experiment lediglich von der Erzeugung der Schlüssel und dem Entschlüsselungsalgorithmus abhängig ist.
 
-Aus Lemma \ref{lemma_verteilung} folgt, dass die zweite Komponente des Geheimtextes des Verfahrens $\tilde{\Pi}$ ein gleichmäßig zufällig verteiltes Element der Gruppe $\mathbb{G}$ ist. Weiterhin besteht keine Abhängigkeit zur Nachricht $m$ welche zu verschlüsseln ist, da aus Lemma \ref{lemma_verteilung} auch folgt, dass $g^z$ ein zufälliges Element von $\mathbb{G}$ ist, wenn $z$ aus $\mathbb{Z_q}$ zufällig gewählt wurde.
+Aus Lemma \ref{lemma_verteilung} folgt, dass die zweite Komponente des Geheimtextes des Verfahrens $\tilde{\Pi}$ ein gleichmäßig zufällig verteiltes Element der Gruppe $\mathbb{G}$ ist. Weiterhin besteht keine Abhängigkeit zur Nachricht $m$, welche zu verschlüsseln ist, da aus Lemma \ref{lemma_verteilung} auch folgt, dass $g^z$ ein zufälliges Element von $\mathbb{G}$ ist, wenn $z$ aus $(\mathbb{Z} /q \mathbb{Z})^\times$ zufällig gewählt wurde.
 Die erste Komponente des Geheimtextes ist offensichtlich nicht von $m$ abhängig, es lassen sich somit auch keine Informationen über $m$ aus dieser gewinnen. Zusammengefasst bedeutet dies, dass der gesamte Geheimtext keinerlei Informationen über $m$ enthält. Daraus folgt folgender Zusammenhang:
 $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\tilde{\Pi}}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2}.
 $$
 
-Nun wollen wir einen $\mathsf{PPT}$ Algorithmus $D$ betrachten, welcher das gegebene DDH"=Problem relativ zu $\mathcal{G}$ zu lösen versucht. Der Algorithmus $D$ erhält das Tupel
+Nun wollen wir einen $\mathsf{PPT}$"=Algorithmus $D$ betrachten, welcher das gegebene DDH"=Problem relativ zu $\mathcal{G}$ zu lösen versucht. Der Algorithmus $D$ erhält das Tupel
 $$
 (\mathbb{G},q,g,h_1,h_2,h_3),
 $$
@@ -205,7 +209,7 @@ dabei gilt: $h_1=g^x$, $h_2=g^y$ und $h_3$ ist entweder $g^{xy}$ oder $g^z$, wen
 \end{itemize}
 Wenn wir nun das Verhalten von $D$ analysieren wollen, müssen wir im Nachfolgenden zwei Fälle unterscheiden:
 
-\paragraph{Fall 1:} Zunächst wird $\mathcal{G}(1^n)$ ausgeführt um das Tupel $(\mathbb{G},q,g)$ zu generieren. Anschließend werden zufällig $x,y,z \in (\mathbb{Z} / q\mathbb{Z})^\times$
+\paragraph{Fall 1:} Zunächst wird $\mathcal{G}(1^n)$ ausgeführt um das Tupel $(\mathbb{G},q,g)$ zu generieren. Anschließend werden zufällig $x,y,z \in (\mathbb{Z} /q \mathbb{Z})^\times$
 gewählt und es wird $h_1 := g^x$, $h_2 := g^y$ und $h_3 := g^z$ gesetzt.
 Der Algorithmus $D$ führt $\mathcal{A}$ mit einem öffentlichen Schlüssel aus, der wie folgt konstruiert wird:
 $$
@@ -216,12 +220,12 @@ $$
 \langle c_1, c_2 \rangle = \langle g^y, g^z * m_b \rangle.
 $$
 Die Sicht von $\mathcal{A}$, ausgeführt als Unterroutine von $D$, ergibt eine Verteilung, welche identisch zur Verteilung im Experiment mit $\mathsf{PubK}_{\mathcal{A},\tilde{\Pi}}^{\mathsf{eav}}(n)$ ist.
-Da $D$ nur eine 1 zurück gibt, wenn die Ausgabe $b'$ von $\mathcal{A}$ gleich zu $b$ ist, somit gilt:
+Da $D$ nur eine 1 zurück gibt, wenn die Ausgabe $b'$ von $\mathcal{A}$ gleich zu $b$ ist, gilt somit:
 $$
 \mathrm{Pr}[ D( \mathbb{G}, q, g, g^x, g^y, g^z) = 1 ] = \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\tilde{\Pi}}^{\mathsf{eav}}(n) = 1] = \frac{1}{2}.
 $$
 
-\paragraph{Fall 2:} Zunächst wird $\mathcal{G}(1^n)$ ausgeführt um das Tupel $(\mathbb{G},q,g)$ zu generieren. Anschließend werden zufällig $x,y \in (\mathbb{Z} / q\mathbb{Z})^\times$
+\paragraph{Fall 2:} Zunächst wird $\mathcal{G}(1^n)$ ausgeführt um das Tupel $(\mathbb{G},q,g)$ zu generieren. Anschließend werden zufällig $x,y \in (\mathbb{Z} /q \mathbb{Z})^\times$
 gewählt und es wird $h_1 := g^x$, $h_2 := g^y$ und $h_3 := g^{xy}$ gesetzt.
 Der Algorithmus $D$ führt $\mathcal{A}$ mit einem öffentlichen Schlüssel aus, der wie folgt konstruiert wird:
 $$
@@ -232,7 +236,7 @@ $$
 \langle c_1, c_2 \rangle = \langle g^y, g^{xy} * m_b \rangle = \langle g^y, (g^x)^y * m_b \rangle.
 $$
 Die Sicht von $\mathcal{A}$, ausgeführt als Unterroutine von $D$, ergibt eine Verteilung, welche identisch zur Verteilung im Experiment mit $\mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n)$ ist.
-Da $D$ nur eine 1 zurück gibt, wenn die Ausgabe $b'$ von $\mathcal{A}$ gleich zu $b$ ist, somit gilt:
+Da $D$ nur eine 1 zurück gibt, wenn die Ausgabe $b'$ von $\mathcal{A}$ gleich zu $b$ ist, gilt somit:
 $$
 \mathrm{Pr}[ D( \mathbb{G}, q, g, g^x, g^y, g^{xy}) = 1 ] = \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) = 1 ] = \frac{1}{2}.
 $$
@@ -251,8 +255,8 @@ Dies impliziert $\mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) 
 \subsubsection{Praxis}
 Das ElGamal"=Verschlüsselungsverfahren wird auch in der Praxis eingesetzt, so wird es beispielsweise von GnuPG angeboten. Für einen gewissen Zeitraum war das ElGamal"=Verfahren sogar als Voreinstellung in GnuPG gesetzt.
 
-Das Verfahren hat allerdings auch Nachteile, wie beispielsweise der Nachrichtenraum, welcher durch die gewählt Gruppe $\mathbb{G}$ bestimmt wird. Für manche Gruppen ist es jedoch möglich eine umkehrbare Kodierung von Gruppenelementen zu Bitstrings zu definieren und dieses Problem damit zu umgehen.
+Das Verfahren hat allerdings auch Nachteile, wie beispielsweise der Nachrichtenraum, welcher durch die gewählte Gruppe $\mathbb{G}$ bestimmt wird. Für manche Gruppen ist es jedoch möglich, eine umkehrbare Kodierung von Gruppenelementen zu Bitstrings zu definieren und dieses Problem damit zu umgehen.
 \reference{\hyperref[ref_1]{1}, S. 404}
 
-Weiterhin ist das Verfahren sehr rechenintensiv, da häufig starker Pseudozufallszahlen generiert werden müssen. Es ist daher auch nicht besonders zur Verschlüsselung großer Datenmengen geeignet. Hier bietet es sich an das ElGamal-Verfahren nur zur Verschlüsselung eines Schlüssels zu verwenden, welcher wiederum für ein symmetrisches Verfahren genutzt wird. Ein solches Konstrukt wird als hybrides Verschlüsselungverfahren bezeichnet.
+Weiterhin ist das Verfahren sehr rechenintensiv, da häufig starker Pseudozufallszahlen generiert werden müssen. Es ist daher auch nicht besonders zur Verschlüsselung großer Datenmengen geeignet. Hier bietet es sich an, das ElGamal-Verfahren nur zur Verschlüsselung eines Schlüssels zu verwenden, welcher wiederum für ein symmetrisches Verfahren genutzt wird. Ein solches Konstrukt wird als hybrides Verschlüsselungverfahren bezeichnet.
 \reference{\hyperref[ref_4]{4}}

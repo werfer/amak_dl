@@ -14,6 +14,7 @@ Im Nachfolgenden gehen wir davon aus, dass A eine Nachricht an B senden will, wi
 Beide Teilnehmer müssen sich über eine zyklische Gruppe $\mathbb{G} = \langle g \rangle$ der Ordnung $p$ einigen, sowohl $\mathbb{G}$ als auch der Erzeuger $g$ werden öffentlich gemacht.
 \reference{\hyperref[ref_2]{2}, S. 147}
 Das National Institute of Standards and Technology (oder kurz NIST) hat hierzu eine Auswahl an empfohlenen Parametern veröffentlicht.
+Generell sollte die Ordnung $p$ der gewählten Gruppe prim sein.
 \reference{\hyperref[ref_1]{1}, S. 404}
 
 \paragraph{Erzeugung der Schlüssel} ~\\
@@ -95,31 +96,33 @@ werden zufällig gewählt.
 \end{definition}
 \bigskip
 
-Der Ursprung des Parameters $1^n$ ist vielleicht nicht sofort offensichtlich, deshalb wollen wir an dieser Stelle eine kurze Erläuterung wiedergeben:
+Der Ursprung des Parameters $1^n$ ist vielleicht nicht sofort offensichtlich, deshalb wollen wir an dieser Stelle eine kurze Erläuterung durch folgendes Zitat wiedergeben:
 \begin{quote}
-\textbf{The} $1^n$ \textbf{hack}
-Notice the presence of a rather mysterious"=looking $1^n$ as an input parameter to many algorithms [...]. This is a common ``hack'' found in complexity"=theory literature. We want the running time of these algorithms to by polynomial"=time in the security parameter $n$ -- by passing $1^n$ as a parameter, we ensure that the input length is of length at least $n$; and hence the algorithm gets to run for time polynomial in $n$.
+"`\textbf{The} $1^n$ \textbf{hack}
+Notice the presence of a rather mysterious"=looking $1^n$ as an input parameter to many algorithms [...]. This is a common ``hack'' found in complexity"=theory literature. We want the running time of these algorithms to by polynomial"=time in the security parameter $n$ -- by passing $1^n$ as a parameter, we ensure that the input length is of length at least $n$; and hence the algorithm gets to run for time polynomial in $n$."'
 \reference{\hyperref[ref_3]{3}}
 \end{quote}
 
 Bevor wir uns wieder dem DDH"=Problem zuwenden, wollen wir noch ein kurzes Lemma einführen. Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ ein zufälliges Element. Das Lemma besagt nun, dass die Multiplikation von $m$ mit einem zufälligen Element $k$ der Gruppe, zu gleichmäßig verteilten Elementen $k'$ der Gruppe führt. Somit ist die Verteilung der $k'$ nicht von $m$ abhängig und damit kann aus $k'$ keine Information gewonnen werden, welche Rückschlüsse auf $m$ zulässt.
 \reference{\hyperref[ref_1]{1}, S. 400}
 
+Im Nachfolgenden verwenden wir die Notation $a \gets \mathbb{G}$ für die Wahl eines beliebigen Elements $a$ aus der Gruppe $\mathbb{G}$ sowie für Zuweisungen als Ausgabe von Algorithmen.
+
 \begin{lemma}\label{lemma_verteilung}
 Sei $\mathbb{G}$ eine endliche Gruppe und $m \in \mathbb{G}$ willkürlich gewählt. Wird $k \gets \mathbb{G}$ zufällig gewählt und ist $k' := k*m$, dann erhält man die selbe Verteilung für $k'$, als wenn $k' \gets \mathbb{G}$ gewählt wird.
-Anders gesagt, gilt für alle $\hat{g} \in \mathbb{G}$:
+Anders gesagt, gilt für alle $a \in \mathbb{G}$:
 $$
-\mathrm{Pr}[k*m=\hat{g}]=1/|\mathbb{G}|,
+\mathrm{Pr}[k*m=a]=1/|\mathbb{G}|,
 $$
 wobei die die Wahrscheinlichkeit durch eine zufällige Wahl von $k \in \mathbb{G}$ bestimmt wird.
 \end{lemma}
 
 \begin{proof}
-Sei $\hat{g} \in \mathbb{G}$ beliebig. Dann gilt:
+Sei $a \in \mathbb{G}$ beliebig. Dann gilt:
 $$
-\mathrm{Pr}[k*m = \hat{g}] = \mathrm{Pr}[k = \hat{g}*m^{-1}].
+\mathrm{Pr}[k*m = a] = \mathrm{Pr}[k = a*m^{-1}].
 $$
-Da $g$ gleichmäßig per Zufall aus $\mathbb{G}$ gewählt wurde, ist die Wahrscheinlichkeit, dass $g$ gleich dem fixierten Element $m^{-1}*\hat{g}$ ist, genau $1 / |\mathbb{G}|$.
+Da $k$ gleichmäßig per Zufall aus $\mathbb{G}$ gewählt wurde, ist die Wahrscheinlichkeit, dass $k$ gleich dem fixierten Element $m^{-1}*a$ ist, genau $1 / |\mathbb{G}|$.
 
 \end{proof}
 \bigskip
@@ -129,6 +132,8 @@ Dieses soeben bewiesene Lemma lässt sich dazu nutzen, ein perfekt sicheres Vers
 Ein solches Verfahren wäre einfach eine Umsetzung des One"=Time"=Pad"=Schemas.
 
 Für den anschließenden Sicherheitbeweis wollen wir nun noch eine formale Beschreibung des ElGamal"=Verschlüsselungsverfahrens angeben, welches aus den drei Algorithmen $\mathsf{Gen}$, $\mathsf{Enc}$ und $\mathsf{Dec}$ besteht. In Zukunft bezeichnen wir ein Verschlüsselungsverfahren bestehend aus diesen drei Algorithmen mit $\Pi$.
+\bigskip
+
 \paragraph{Formale Beschreibung des Verfahrens}
 \begin{itemize}
  \item $\mathsf{Gen}$: Die Eingabe des Schlüsselerzeugungsalgorithmus ist ein Sicherheitsparameter $1^n$. Damit wird der Gruppenerzeugungsalgorithmus $\mathcal{G}(1^n)$ ausgeführt, um $(\mathbb{G},q,g)$ zu erhalten. Wähle ein zufälliges $x \in (\mathbb{Z} /q \mathbb{Z})^\times$
@@ -138,7 +143,7 @@ Für den anschließenden Sicherheitbeweis wollen wir nun noch eine formale Besch
  $$
  \langle g^y, h^y * m \rangle.
  $$
- \item $\mathsf{Dec}$: Der Entschlüsselungsalgorithmus erhält als Eingabe den privaten Schlüssel $sk = \langle \mathbb{G},q,g,x \rangle$ und den Geheimtext $\langle c_1, c_2 \rangle$. Ausgegeben wird:
+ \item $\mathsf{Dec}$: Der Entschlüsselungsalgorithmus erhält als Eingabe den privaten Schlüssel $sk = \langle \mathbb{G},q,g,x \rangle$ und den Geheimtext $\langle c_1, c_2 \rangle$. Ausgegeben wird die entschlüsselte Nachricht $\hat{m} \in \mathbb{G}$:
  $$
  \hat{m} := c_2 / c_1^x.
  $$
@@ -146,6 +151,7 @@ Für den anschließenden Sicherheitbeweis wollen wir nun noch eine formale Besch
 \noindent
 Das Public"=Key"=Experiment, auf das wir uns nachfolgend beziehen, kann für ein gegebenes Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec)}$ und einen Angreifer $\mathcal{A}$, welcher einen Abhörversuch unternimmt, wie folgt beschrieben werden:
 \paragraph{Das Ununterscheidbarkeitsexperiment $\mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n)$:}
+\reference{\hyperref[ref_1]{1}, S. 379}
 \begin{itemize}
  \item $\mathsf{Gen}(1^n)$ wird ausgeführt, um ein Schlüsselpaar $(pk, sk)$ zu erhalten.
  \item Der Angreifer $\mathcal{A}$ erhält den öffentlichen Schlüssel $pk$. Dieser generiert daraufhin zwei Nachrichten gleicher Länge: $m_0$ und $m_1$.
@@ -159,6 +165,7 @@ Das Public"=Key"=Experiment, auf das wir uns nachfolgend beziehen, kann für ein
 
 \begin{definition}
 Das Verschlüsselungsverfahren $\Pi = (\mathsf{Gen, Enc, Dec})$ besitzt nicht zu unterscheidende Geheimtexte aus Sicht eines Abhörers, wenn für alle $\mathsf{PPT}$"=Angriffsalgorithmen $\mathcal{A}$ eine vernachlässigbare Funktion $\mathsf{negl}$ existiert, für die gilt:
+\reference{\hyperref[ref_1]{1}, S. 379}
 $$
 \mathrm{Pr}[ \mathsf{PubK}_{\mathcal{A},\Pi}^{\mathsf{eav}}(n) = 1 ] \leq \frac{1}{2} + \mathsf{negl}(n).
 $$

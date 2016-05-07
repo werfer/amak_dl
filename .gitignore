@@ -3,4 +3,6 @@
 *.log
 *.toc
 *.synctex.gz
-
+*.nav
+*.snm
+*.backup

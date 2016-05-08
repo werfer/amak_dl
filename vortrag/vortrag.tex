@@ -11,7 +11,7 @@
 
 \usepackage{amsmath}
 \usepackage{verbatim}
-\usepackage{enumitem}
+%\usepackage{enumitem}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{float}
@@ -42,6 +42,7 @@
 \usetheme{Berlin}
 \usecolortheme{default}
 \setbeamertemplate{footline}[frame number]
+\setbeamertemplate{itemize items}[square]
 
 \title{Diskreter Logarithmus}
 \author{Josef Schmeißer und Fabian Grotz}
@@ -58,8 +59,72 @@
 \end{frame}
 
 \section{Gruppentheorie}
-\begin{frame}[t]
 
+\begin{frame}[c]
+Sei $(\mathbb{G}, \cdot)$ eine Gruppe, wir definieren:
+\begin{definition}
+\begin{itemize}
+ \item $e$ bezeichnet das neutrale Element
+ \item $ord(\mathbb{G}) := |\mathbb{G}|$
+ \item Für $\alpha \in \mathbb{G}$ ist $ord(\alpha) = n$ mit $\alpha^n = e$
+\end{itemize}
+\end{definition}
+\begin{definition}
+Sei $n \in \mathbb{N}$ und $\alpha^n = 1$ sowie $\alpha^{n/p} \neq 1$ für alle Primteiler $p$ von $n$.
+Dann hat $\alpha$ die Ordnung $n$.
+\end{definition}
+\end{frame}
+
+\begin{frame}[c]
+\begin{definition}
+Eine Gruppe $\mathbb{G}$ heißt zyklisch, wenn ein $g \in \mathbb{G}$ existiert, so dass: 
+$$
+\forall \alpha \in \mathbb{G} : \exists i \in \mathbb{N} : g^i = \alpha
+$$
+\end{definition}
+Wir nennen $g$ einen Generator der zyklischen Gruppe.
+\end{frame}
+
+\begin{frame}[c]
+\begin{itemize}
+ \item Sei $(\mathbb{G}, \cdot)$ eine Gruppe und $\alpha \in \mathbb{G}$.
+ \item $\alpha $ sei von endlicher Ordnung.
+\end{itemize}
+\begin{definition}
+$ \langle \alpha \rangle $ bezeichnet die von $\alpha$ erzeugte Untergruppe.
+\end{definition}
+\end{frame}
+
+\begin{frame}[c]
+Die Euler'sche $\varphi(n)$"=Funktion ist wie folgt definiert:
+\begin{definition}
+Sie gibt für eine natürliche Zahl $n$ an, wie viele zu $n$ teilerfremde natürliche Zahlen existieren,
+welche nicht größer als $n$ sind:
+$$
+\varphi(n) \; := \; \Big| \{a \in \mathbb{N} \, |\, 1 \le a \le n \wedge ggT(a,n) = 1 \} \Big|
+$$
+\end{definition}
+\end{frame}
+
+\begin{comment}
+Es sei $(G,\cdot \ p)$ eine Gruppe, $ \alpha \in G $ und $p = |G|$.
+$ \alpha $ heißt Primitivwurzel, wenn $ \alpha $ die Ordnung $p$ hat und
+$ ggT( \alpha, p) = 1 $.\\
+Es sei $ ( Z_p, \cdot \ p ) $ eine prime Restklassengruppe und $ \alpha \in Z_p$.\\
+Weiterhin seien $ p_1 , p_2 , \cdots , p_n $ die Primfaktoren von $G$.\\
+$ \alpha $ ist eine Primitivwurzel, wenn für $ 1 \leq r \leq n $ gilt $ \alpha^{pr} \neq  1 $.
+\end{comment}
+
+\subsection{Primwurzel}
+\begin{frame}[c]
+Sei $\mathbb{G}$ die prime Restklassengruppe $(\mathbb{Z} /p \mathbb{Z})^\times$
+mit der Multiplikation als vorherrschende Operation (gekennzeichnet durch $\times$).
+\begin{definition}
+Ein Element $\alpha \in \mathbb{G}$ ist eine Primitivwurzel modulo $p$, wenn gilt:
+$$
+ord(\alpha) = \varphi(p)
+$$
+\end{definition}
 \end{frame}
 
 \end{document}

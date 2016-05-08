@@ -49,7 +49,7 @@ Der Berechnungsaufwand kann hierdurch etwas reduziert werden, da das Ergebnis de
 Als Beispiel wählen wir die prime Restklassengruppe $\mathbb{G} := (\mathbb{Z} /37 \mathbb{Z})^\times$. Die vorherrschende Operation ist hier die Multiplikation, welche durch $\times$ gekennzeichnet wird.
 Durch ausprobieren findet man mit $g=5$ einen Generator dieser Restklassengruppe; dass $g=5$ tatsächlich ein erzeugendes Element ist soll im Nachfolgenden kurz gezeigt werden.
 
-Bekanntlich ist ein Element $g$ einer zyklischen Gruppe $\mathbb{G}$ ein Erzeuger dieser, wenn $org(\langle g \rangle) = ord(\mathbb{G})$ mit $ord(\mathbb{G}) := |\mathbb{G}|$ gilt. Durch nachrechnen stellt sich heraus, dass $ord(\langle 5 \rangle) = 36 = ord(\mathbb{G})$ und somit $\langle 5 \rangle = (\mathbb{Z} /37 \mathbb{Z})^\times$ gilt. Als Eingabe für den Babystep"=Giantstep"=Algorithmus setzen wir nun $g=5$.
+Bekanntlich ist ein Element $g$ einer zyklischen Gruppe $\mathbb{G}$ ein Erzeuger dieser, wenn $ord(\langle g \rangle) = ord(\mathbb{G})$ mit $ord(\mathbb{G}) := |\mathbb{G}|$ gilt. Durch nachrechnen stellt sich heraus, dass $ord(\langle 5 \rangle) = 36 = ord(\mathbb{G})$ und somit $\langle 5 \rangle = (\mathbb{Z} /37 \mathbb{Z})^\times$ gilt. Als Eingabe für den Babystep"=Giantstep"=Algorithmus setzen wir nun $g=5$.
 
 \begin{definition}
 Die Euler'sche $\varphi(n)$"=Funktion gibt für eine natürliche Zahl $n$ an, wie viele zu $n$ teilerfremde natürliche Zahlen existieren, welche nicht größer als $n$ sind:

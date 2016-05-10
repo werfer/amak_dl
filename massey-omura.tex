@@ -1,9 +1,9 @@
 % Autor: Fabian
-Der Grundgedanke an die Anforderungen dieses Sicheren Übertragungsschemas war, dass beide Parteien weder den privaten noch den öffentlichen Schlüssel der anderen Partei besitzen oder auf diesen Schlussfolgern können. Das Massey-Omura-Schema wurde hierzu im Jahre 1983 von den Kryptologen James Massey und Jim Omura entwickelt und basiert auf der Schwierigkeit, den diskreten Logarithmus zu lösen.
+Der Grundgedanke an die Anforderungen dieses sicheren Verschlüsselungsverfahrens war, dass beide Parteien weder den privaten noch den öffentlichen Schlüssel der anderen Partei besitzen oder auf diesen Schlussfolgern können. Das Massey-Omura-Schema wurde hierzu im Jahre 1983 von den Kryptologen James Massey und Jim Omura entwickelt und basiert auf der Schwierigkeit, den diskreten Logarithmus zu lösen.
 
-\subsubsection{intuitive Beschreibung}
+\subsubsection{intuitive Beschreibung des Massey-Omura-Schemas}
 
-Um im Vorhinein die Wirkungsweise zu verdeutlichen ohne die dahinter liegende Mathematik anzutasten, beschreiben wir die Methode mithilfe einer Metapher.
+Um im Vorhinein die Wirkungsweise des Massey-Omura-Schemas zu verdeutlichen ohne die dahinter liegende Mathematik anzutasten, beschreiben wir die Methode mithilfe einer Metapher. \reference{\hyperref[ref_6]{6}} Diese Grundidee kann auch in abgewandelter Form in anderen Verschlüsselungsverfahren gefunden werden. Es sei aber hier zu beachten, dass beide Kommunikationsteilnehmer niemals über die Schlüssel des anderen bescheid wissen.
 \begin{itemize}
 	\item
 	Alice und Bob wollen Nachrichten austauschen. Zu erst möchte Alice an Bob eine Nachricht schicken und legt diese Nachricht in eine Kiste, verschließt sie mit ihrem Schloss und sendet die Kiste an Bob.
@@ -14,47 +14,69 @@ Um im Vorhinein die Wirkungsweise zu verdeutlichen ohne die dahinter liegende Ma
 	\item
 	Bob bekommt die Kiste mit nur seinem Schloss das er durch seinen eigenen Schlüssel auch wieder entfernen kann. Die Kiste hat nun kein Schloss mehr und Bob kann die Nachricht von Alice lesen die sich in der Kiste befindet.
 \end{itemize}
+
+Das interessante beim Massey-Omura-Verfahren ist, dass die Schlüssel immer geheim bleiben. Bei anderen Verfahren wie dem Elgamal-Verfahren und dem Diffie-Hellmann-Verfahren werden öffentliche Schlüssel ausgetauscht, beim Massey-Omura-Verfahren hingegen nicht.
 \subsubsection{Voraussetzung}
 
-Die Voraussetzung an das Verfahren ist, dass beide über eine gemeinsame und  genügend große Primzahl p bescheid wissen. Diese Primzahl kann öffentlich bekannt sein. \\
+Die Voraussetzung an das Massey-Omura-Verfahren ist einzig, dass Sender und Empfänger über eine gemeinsame und  genügend große Primzahl $p$ bescheid wissen. Diese Primzahl kann öffentlich bekannt sein, dies würde zu keiner Sicherheitslücke führen. \\
+Weiterer Austausch eines Schlüssels zwischen Sender und Empfänger ist nicht nötig.
 \\
-Alice und Bob wählen nun jeweils ein Paar von Exponenten $ d $ und $ e $ mit \begin{center}
-	$ ed \equiv 1 \ (\bmod \ p-1) $
-\end{center} , das bedeutet also dass\begin{center}
+\subsubsection{Vorbereitungen}
+Zur Vorbereitung müssen nun Alice als Sender und Bob als Empfänger jeweils ein Paar von Exponenten $ d $ und $ e $ wählen für die folgendes gelten soll: 
+\begin{center}
+	$ e \cdot d \equiv 1 \ (\bmod \ p-1) $
+\end{center} 
+Das bedeutet also dass
+\begin{center}
  $ a^{de} \equiv a \ (\bmod \ p-1) $
 \end{center} 
-für alle ganzen Zahlen $ a \in Z $ gilt. Diese Behauptung wurde durch den kleinen Satz von Fermet bereits bestätigt. Diese Voraussetzung ist dann später hilfreich um mit dem Schlüsselpaar die eigene Verschlüsselung wieder aufzuheben.  Für die Berechnung von $e$  muss zuerst ein $e$ mit 
+für alle ganzen Zahlen $ a \in Z $ gilt. Diese Behauptung wurde durch den kleinen Satz von Fermet bereits bestätigt. Diese Voraussetzung ist später hilfreich um durch das Schlüsselpaar die eigene Verschlüsselung wieder aufzuheben.  \\
+Für die Berechnung von $e$  muss zuerst eine entsprechende Zahl gefunden werden für die gilt: 
 \begin{center}
 	$e < p-1$  und $ggT(e,p-1) = 1 $
 \end{center} 
-gefunden werden. $d$ ist dann das multiplikativ Inverse von $e \bmod p-1$. \\
-Beide Parteien Alice und Bob halten ihre Zahlen geheim.
+, also eine zu p-1 teilerfremde Zahl. 
+$d$ ist dann das multiplikativ Inverse von $e \bmod p-1$. \\
+Beide Parteien, Alice und Bob, halten beide ihre Zahlen geheim und werden diese auch nie herausgeben.
 
 \subsubsection{Ablauf}
 
-Alice berechnet aus ihrer ursprünglichen Nachricht $m < p$ die Nachricht $x_A$ die sie an Bob sendet 
+\textbf{Anmerkung zur Notation}
+Alle Schlüssel $e$ und $d$, sowie die Nachrichten $x$ versehen wir mit einem $_A$ wenn diese von Alice stammen und einem $_B$ für Bob.
+
+\textbf{Verschlüsselung Alice}\\
+Alice berechnet aus ihrer ursprünglichen Nachricht $m$, die kleiner als die vorher gewählte und öffentlich bekannte Primzahl $p$ ist, die Nachricht $x_{A1}$ die sie an Bob sendet nachdem sie sie wie folgt berechnet:
 \begin{center}
 	$x_{A1} = m^{e_A} \bmod p$
 \end{center}
-Bob berechnet aus dieser Nachricht seine eigene Rückantwort \begin{center}
+\textbf{Verschlüsselung Bob}\\
+Bob berechnet aus dieser Nachricht, die er von Alice bekommen hat, seine eigene Rückantwort $x_B$ durch:
+ \begin{center}
 	$x_B = (x_A)^{e_B} \bmod p$ \\
-    $\Leftrightarrow	x_B = (m^{e_A})^{e_B} \bmod p$. 
+	was gleichbedeutend ist mit
+    $x_B = (m^{e_A})^{e_B} \bmod p$. 
 \end{center}
-Alice erzeugt ausgehend der Rückantwort von Bob und mithilfe ihres Schlüssels nun die nur von Bob verschlüsselte Nachricht. 
+\textbf{Entschlüsselung Alice}\\
+Alice erzeugt nun wiederum ausgehend aus der Rückantwort $x_B$ von Bob und mithilfe ihres Schlüssels $d_A$ die nur noch von Bob verschlüsselte Nachricht $x_A2$ und sendet diese wieder an Bob. 
 \begin{align*}
-x_{A2}  & = {x_B}^{d_A} \bmod p \\
+x_{A2}  & = ({x_B})^{d_A} \bmod p \\
 \Leftrightarrow x_{A2} & = ((m^{e_A})^{e_B})^{d_A} \bmod p \\
 \Leftrightarrow x_{A2} & = ((m^{e_A})^{d_A})^{e_B} \bmod p \\
 \Leftrightarrow x_{A2} & = m^{e_B} \bmod p
 \end{align*}
- In diesem Schritt hat Alice also all ihre Verschlüsselung der Ursprungsnachricht wieder aufgehoben und die Nachricht ist nur noch durch die Verschlüsselung von Bob verschlüsselt. \\
-Bob entschlüsselt die Nachricht nun mit 
+ In diesem Schritt hat Alice also all ihre Verschlüsselungen der Ursprungsnachricht wieder aufgehoben und die Nachricht ist nur noch durch die Verschlüsselung von Bob verschlüsselt. \\
+ Erreicht wird dies, indem man ausnutzt dass die Exponentiation kommutativ in den gewählten Gruppen ist. Außerdem wird hier der kleine Satz von Fermat angewendet wodurch $(m^{e_A})^{d_A} = m^{e_A d_A} = m$ ist.\\
+ \\
+ \textbf{Entschlüsselung Bob}\\
+Bob entschlüsselt die Nachricht $x_A2$ von Alice nun mit 
 \begin{center}
-	$ {x_{A2}}^{d_B} = (m^{e_B})^{d_B} = m \bmod p$. 
+	$ {x_{A2}}^{d_B} = (m^{e_B})^{d_B} = = m^{e_B d_B} = m \bmod p$. 
 \end{center}
-Bob hat damit nun die Ursprungsnachricht von Alice bekommen. Außer Alice und Bob konnte ohne das Wissen der Schlüssel niemand auf die Ursprungsnachricht m während der Datenübertragung zugreifen. 
+Hier wird auch wieder der kleine Satz von Fermat ausgenutzt.
+Bob hat damit nun die Ursprungsnachricht $m$ von Alice bekommen. Außer Alice und Bob konnte ohne das Wissen der Schlüssel niemand auf die Ursprungsnachricht $m$ während der Nachrichtenübertragung zugreifen. 
 
 \subsubsection{Sicherheitsaspekte}
 
-Das Massey-Omura-Schema ist gegen einen Lauschangriff sicher, solange das Problem des Diskreten Logarithmus nicht effizient lösbar ist. Wenn dieser Fall eintreten sollte, ist dieses Verfahren nicht mehr sicher, da aus den einzelnen übertragenen Nachrichten Rückschlüsse auf die Schlüssel gezogen werden könnten.\\
-Einen Wirkungsvollen Schutz gegen einen Man-in-the-Middle Angriff bietet dieses Schema jedoch nicht, da dieses Verfahren nur gegen Lauschangriffe ausgelegt ist.
+Das Massey-Omura-Schema ist gegen einen Lauschangriff, also ein Lesen der Nachricht durch eine dritte Partei, sicher, solange das Problem des diskreten Logarithmus nicht effizient lösbar ist. Der Grund hierfür ist, dass eine Berechnung der einzelnen Schlüsseln $d$ und $e$  aus den Nachrichten zwischen Alice und Bob sehr schwer ist und ohne die Schlüssel die Nachrichten nicht gelesen werden können. \\
+Wenn der Fall eintreten sollte, dass das diskrete Logarithmusproblem effizient gelöst werden kann, ist dieses Verfahren nicht mehr sicher, da aus den einzelnen übertragenen Nachrichten Rückschlüsse auf die Schlüssel gezogen werden könnten und sie einfach berechnet werden könnten.\\
+Einen wirkungsvollen Schutz gegen einen Man-in-the-Middle Angriff bietet das Massey-Omura-Schema jedoch nicht, da dieses Verfahren nur gegen Lauschangriffe ausgelegt ist. Ein Man-in-the-Middle Angriff verwendet eine 3. Person die sich als Empfänger für den Sender ausgibt, als Sender für den Empfänger und den ganzen Kommunikationsweg zwischen Sender und Empfänger beherrscht. Dadurch werden alle Nachrichten über die 3. Person geleitet und diese kann Lesen und Bestimmen welche Nachrichten wie übertragen werden. Der Man-in-the-Middle Angriff soll aber hier nicht weiter erläutert werden, da er in anderen Präsentationen in fast ähnlicher Weise behandelt wird.

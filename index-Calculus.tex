@@ -1,23 +1,24 @@
 
+Der Index-Calculus-Algorithmus ist ein Algorithmus zur Berechnung des diskreten Logarithmus. $x = \log_{\alpha} \beta$
+
 Idee:
 
 Wir berechnen den ’großen’ Logarithmus, indem wir
 Logarithmen für ’kleine’ Elemente aus $Z_p$ berechnen und
-damit Rückschlüsse auf den ’großen’ Logarithmus ziehen.
+damit Rückschlüsse auf den ’großen’ Logarithmus ziehen. Mit 'groß' meinen wir hier Zahlen der Ordnung $n$ und mit 'klein' sind deutlich kleinere Zahlen der Ordnung $\sqrt{n}$ gemeint. 
+Die Bestimmung des Logarithmus für 'kleine' Zahlen ist deutlich einfacher als für die 'großen' Zahlen wodurch wir eine Verbesserung der Berechnung des diskreten Logarithmus bekommen. 
 
 \subsubsection{Vorberechnung}
 \begin{enumerate}
-	\item  Man bestimmt eine Zahl $B < n$ und die Menge $F(B) = \left\lbrace p_1 , p_2 , \cdots , p_B \right\rbrace $ von Primzahlen, die sogenannte Faktorbasis.
-	\item  Man wähle ein C größer als B, z.B. $B + 10$.
-	\item  Man erhält nun C Kongruenzen der Form
+	\item  Man bestimmt eine Zahl $B < n$ und die Menge $F(B) = \left\lbrace p_1 , p_2 , \cdots , p_B \right\rbrace $ von Primzahlen, die sogenannte Faktorbasis. Die Faktorbasis ist eine Untermenge von $G$ mit der Eigenschaft, dass ein bedeutender Teil der Gruppenelemente sich als Produkt der Elemente in $B$ schreiben lässt.
+	\item  Man wähle ein $C$ größer als $B$, z.B. $B + 10$.
+	\item  Man erhält nun $C$ Kongruenzen der Form
 	$ \alpha^ {x_j} \equiv {{p_1}^{a_{1j}}} {{p_2}^{a_{2j}}} \cdots {{p_B}^{a_{Bj}}} \bmod p $ für $ 1 \leq j \leq C $.
-	\item  Dies kann man in ein lineares Gleichungssystem mit C Gleichungen
-	umwandeln mit Gleichungen der Form \\
+	\item  Dies kann man in ein lineares Gleichungssystem mit $C$ Gleichungen umwandeln mit Gleichungen der Form \\
 	$ x_j \equiv a_{1j} \log_ \alpha p_1 + \cdots + a_{Bj} \log_ \alpha p_B \ \bmod p - 1 $  für  $ 1 \leq j \leq C $.
-	\item  Man bestimmt x-Werte, so dass $ \alpha^x $ nur Primfaktoren in $ F\left( B\right) $ hat,
+	\item  Man bestimmt $x$-Werte, so dass $ \alpha^x $ nur Primfaktoren in $ F\left( B\right) $ hat,
 	und berechnet die Exponenten der Primfaktoren durch Division.
-	\item  Anschließend löst man das lineare Gleichungssystem mit dem
-	Gauss’schen Algorithmus.	
+	\item  Anschließend löst man das lineare Gleichungssystem mit dem Gauss’schen Algorithmus.	
 \end{enumerate}
 
 - Die Vorberechnung terminiert in O$({e^{(1+o(1))\sqrt{\ln( p) \ln( \ln( p)) }}})$.
@@ -25,14 +26,16 @@ damit Rückschlüsse auf den ’großen’ Logarithmus ziehen.
 \subsubsection{Bestimmen des diskreten Logarithmus}
 
 \begin{enumerate}
-	\item Man wählt zufällig ein $ s$ im Bereich $1 \leq s \leq p - 2 $ und berechnet $ y = \beta \alpha ^s \bmod \ p $.
-	
-	\item Wenn $s$ nur Primfaktoren in $F(B)$ hat, so erhält man \\
-	$ \beta \alpha ^s \equiv p^{c_11} p^{c_22} \cdots p^{c_BB} \bmod \ p $ \\
+	\item Man wählt zufällig ein $s$ im Bereich $1 \leq s \leq p - 2 $ und berechnet $ y = \beta \alpha ^s \bmod \ p $.	
+	\item Wenn $s$ nur Primfaktoren in $F(B)$ hat, so erhält man \begin{center}
+			$ \beta \alpha ^s \equiv p^{c_11} p^{c_22} \cdots p^{c_BB} \bmod \ p $ 
+	\end{center}
 	ansonsten muss man ein neues $s$ wählen.
-	
 	\item Jetzt kann man umformen nach \\
-	$ \log_ \alpha { \beta + s } \equiv c_1 \log_ \alpha {p_1} \ c_2 \log_ \alpha {p_2} \ \cdots \ c_B log_ \alpha p_B  \ \bmod p - 1 $.
+	\begin{center}
+		$ \log_ \alpha { \beta + s } \equiv c_1 \log_ \alpha {p_1} \ c_2 \log_ \alpha {p_2} \ \cdots \ c_B log_ \alpha p_B  \ \bmod p - 1 $.
+	\end{center}
+	
 \end{enumerate}
 
 - Dieser Algorithmus terminiert in 
@@ -40,26 +43,25 @@ $O(e^{{(1/2+o(1))}\sqrt{\ln (p) \ln( \ln( p) )}})$.
 
 \subsubsection{Beispiel}
 
-Wir nehmen an, dass $p = 83$ ist.
-Wir bestimmen nun $B = 7$ und $ F(B) = {p_1 = 2, p_2 = 3, p_3 = 5, p_4 =7}$ als die Faktorbasis aus Primzahlen.
+Wir nehmen in einem  Beispiel \reference{\hyperref[ref_5]{5}} an, dass $p = 83$ ist.
+Wir bestimmen nun zufällig $B = 7$ und $ F(B) = {p_1 = 2, p_2 = 3, p_3 = 5, p_4 =7}$ als die Faktorbasis aus Primzahlen.
 Wir wählen außerdem ein $C = 17$.\\
-\\
-In folgender Tabelle betrachten wir alles mit mod 82.
 \begin{align*}
-2^1 & \equiv \quad 2 \\
-2^7 & \equiv \quad 45 = 3^2 \cdot 5\\
-2^8 & \equiv \quad 7 \\
-2^9 & \equiv \quad 14 = 2 \cdot 7 \\
-2^{10} & \equiv \quad 28 = 2^2 \cdot 7 \\
-2^{11} & \equiv \quad 56 = 2^3 \cdot 7 \\
-2^{12} & \equiv \quad 29 \\
-2^{13} & \equiv \quad 58 = 2 \cdot 29 \\
-2^{14} & \equiv \quad 33 = 3 \cdot 11 \\
-2^{15} & \equiv \quad 66 = 3 \cdot 2 \cdot 11 \\
-2^{16} & \equiv \quad 49 = 7^2 \\
-2^{17} & \equiv \quad 15 = 3 \cdot 5 \\
+2^1 & \equiv \quad 2 \bmod 82\\
+2^7 & \equiv \quad 45 = 3^2 \cdot 5 \bmod 82\\
+2^8 & \equiv \quad 7 \bmod 82\\
+2^9 & \equiv \quad 14 = 2 \cdot 7 \bmod 82\\
+2^{10} & \equiv \quad 28 = 2^2 \cdot 7 \bmod 82\\
+2^{11} & \equiv \quad 56 = 2^3 \cdot 7 \bmod 82\\
+2^{12} & \equiv \quad 29 \bmod 82\\
+2^{13} & \equiv \quad 58 = 2 \cdot 29 \bmod 82\\
+2^{14} & \equiv \quad 33 = 3 \cdot 11 \bmod 82\\
+2^{15} & \equiv \quad 66 = 3 \cdot 2 \cdot 11 \bmod 82\\
+2^{16} & \equiv \quad 49 = 7^2 \bmod 82\\
+2^{17} & \equiv \quad 15 = 3 \cdot 5 \bmod 82\\
 \end{align*}
-Aus diesem System nehmen wir nur diejenigen Gleichungen heraus, die wir durch unsere vorher bestimmte Faktorbasis darstellen können. In unserem Fall $2^1, 2^7, 2^8, 2^9 \ und \ 2^{17}$. Wir hätten auch mehr zur Verfügung, aber diese Anzahl reicht bereits.\\
+Die Zahlen 2 bis 6 haben wir der Übersicht halber weg gelassen.
+Aus diesem System nehmen wir nur diejenigen Gleichungen heraus, die wir durch unsere vorher bestimmte Faktorbasis darstellen können. In unserem Fall $2^1, 2^7, 2^8, 2^9 \ und \ 2^{17}$ da sich diese allein durch die Faktorbasis bzw. deren Primzahlen darstellen lassen. Wir hätten auch mehr zur Verfügung, aber diese Anzahl reicht bereits da unser Gleichungssystem sonst überbelegt wäre.\\
 \\
 Die Gleichungen geben uns ein lineares Gleichungssystem das wir lösen.
 \begin{table}[h!]
@@ -83,15 +85,11 @@ Damit sind unsere Vorbereitungen abgeschlossen und wir bekommen:
 \end{center}
 Wenn wir nun $\log_2(31)$ wissen möchten gehen wir wie folgt vor.
 \begin{align*}
-31^2 &\equiv 48 = 2^4 \cdot 3   \ \ \ \ |log \\
-2 \cdot \log_2(31) & \equiv 4 \cdot \log_22 + \log_23 \\
-\Longleftrightarrow 2 \ \cdot \log_2(31) & \equiv 1+1+1+1 + 72 = 76 \\
+31^2 &\equiv 48 = 2^4 \cdot 3  \bmod 82 \ \ \ \ |log \\
+2 \cdot \log_2(31) & \equiv 4 \cdot \log_22 + \log_23 \bmod 82 \\
+\Longleftrightarrow 2 \ \cdot \log_2(31) & \equiv 1+1+1+1 + 72 = 76 \bmod 82\\
 daraus & folgt: \\
-\log_2(31) & \equiv 38 \ oder \\
-\log_2(31) & \equiv 38+41 = 79\\
+\log_2(31) & \equiv 38 \bmod 82 \ oder \\
+\log_2(31) & \equiv 38+41 = 79 \bmod 82\\
 \end{align*}
-und wie wir aus unserer Annahme leicht nachprüfen können ist $2^{38} \bmod 83 = 31$. Der wert 38 + 41 ist durch das Modulorechnen und die Teilung durch 2 zu überprüfen und mit einzuplanen.
-
-\subsubsection{Bemerkung}
-
-Von einem Laufzeitstandpunkt aus gesehen ist erst bei großen Primzahlen das Index-Calculus-Verfahren schneller als z.b. der Baby-Step-Giant-Step Algorithmus. 
+und wie wir aus unserer Annahme leicht nachprüfen können ist $2^{38} \bmod 83 = 31$. Der wert 38 + 41 ist durch das Modulo rechnen und die Teilung durch 2 zu überprüfen und mit einzuplanen.

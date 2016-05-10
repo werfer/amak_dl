@@ -1,37 +1,35 @@
 % Autor = Fabian
-In Kryptosystemen wird eine Funktionalität gefordert die es ermöglicht, geheime Daten auszutauschen. Dies wird durch den Einsatz von Symmetrischen Übertragungsverfahren bewerkstelligt, bei dem beide Parteien einen gemeinsamen geheimen Schlüssel besitzen. Um diesen geheimen Schlüssel auszutauschen ohne das ein Angreifer darauf zugriff hat, verwendet man Algorithmen und Methoden die sehr oft auf dem Problem des Diskreten Logarithmus aufbauen. \\
-Der Diskrete Logarithmus ist sehr schwer zu berechnen. Die erzeugende Exponentialfunktion hingegen ist sehr einfach im Sinne der Komplexität zu berechnen was den Diskreten Logarithmus zu einem perfekten Kandidaten für einen erstmaligen Schlüsselaustausch macht. \\
-Zunächst einmal beschäftigen wir uns deswegen mit den mathematischen Grundlagen die für eine Betrachtung des Diskreten Logarithmus-Problems unabdingbar sind.
+In modernen Kryptosystemen wird eine Funktionalität gefordert die es ermöglicht, geheime Daten sicher auszutauschen. Dies wird meißt aus performance Gründen durch den Einsatz von Symmetrischen Nachrichtenübertragungsverfahren bewerkstelligt, bei dem beide Parteien einen gemeinsamen geheimen Schlüssel zur Ver- und Entschlüsselung besitzen. Um diesen geheimen Schlüssel auszutauschen ohne dass ein Angreifer darauf Zugriff hat, verwendet man Algorithmen und Methoden die sehr oft auf dem Problem des Diskreten Logarithmus aufbauen. \\
+Der Diskrete Logarithmus ist sehr schwer zu berechnen. Die erzeugende Exponentialfunktion hingegen ist sehr einfach im Sinne der Komplexität zu berechnen was den Diskreten Logarithmus zu einem perfekten Kandidaten für einen erstmaligen Schlüsselaustausch macht, da so eine Nachricht einfach hin und her geschickt werden kann, aber jedoch nicht gelesen werden kann ohne den diskreten Logarithmus zu berechnen. \\
+Diese Eigenschaft machen sich aktuelle Kryptosysteme zu nutze um mit dem diskreten Logarithmus zu arbeiten. Dies möchten wir mit unserer Ausarbeitung dem Leser näher bringen.\\
+Wir betrachten Anfangs die mathematischen Grundlagen die hinter dem diskreten Logarithmus stehen. Im Anschluss daran werden wir zwei Algorithmen,Babystep-Giantstep und Index-Calculus, vorstellen, wie man schneller als bloßes ausprobieren den diskreten Logarithmus bestimmen kann. Zu guter Letzt stellen wir noch zwei Kryptologie-verfahren vor, namentlich Elgamal und Massey-Omura, um auch reale Anwendung zu zeigen.   
 
-\subsection{Gruppen}
+\subsection{Definitionen}
 
-Es sei $(G, \cdot)$ eine Gruppe wie wir sie bereits aus anderen Vorlesungen kennen.\\
+Es sei $(G, \cdot)$ eine Gruppe.
+\paragraph{Definition Ordnung} 
 Die Ordnung der Gruppe entspricht der Anzahl der Elemente in G.\\
-Die Ordnung eines Elements $\alpha \in G$ ist die Zahl $n$, für die gilt: $\alpha^n= e$, wobei $e$ das neutrale Element bzgl. · ist. 
-\\
-Es sei $n \in N$ und $\alpha^n= 1$ sowie $\alpha^{n/p} \neq  1$ für alle Primteiler $p$ von $n$. Dann ist $n$ die Ordnung von $\alpha$.
-\\
+Die Ordnung eines Elements $\alpha \in G$ ist die Zahl $n$, für die gilt: $\alpha^n= e$, wobei $e$ das neutrale Element bzgl. · ist.\\
+Es sei $n \in \mathbb{Z}$ und $\alpha^n= 1$ sowie $\alpha^{n/p} \neq  1$ für alle Primteiler $p$ von $n$. Dann ist $n$ die Ordnung von $\alpha$.
+\paragraph{Definition zyklische Gruppe}
 Die Gruppe heißt zyklisch, wenn ein $\alpha \in G $ existiert, so dass gilt: 
 \begin{center}
-$ \forall a \in G \  \exists i \in N : \alpha^i = \alpha $
+$ \forall a \in G \  \exists i \in \mathbb{N} : \alpha^i = \alpha $
 \end{center} 
-$ \alpha $ heißt Generator der zyklischen Gruppe.\\
+$ \alpha $ heißt Generator der zyklischen Gruppe.
+\paragraph{Definition Untergruppe}
 Sei $ (G, \cdot \  p ) $ eine Gruppe und $ \alpha \in G$.\\
 $ \alpha $ habe eine endliche Ordnung. Man schreibt $ \langle \alpha \rangle $ für die von $ \alpha $ erzeugte Untergruppe.
-
-\subsection{Primwurzel}
-
+\paragraph{Definition Primitivwurzel}
 Es sei $(G,\cdot \ p)$ eine Gruppe, $ \alpha \in G $ und $p = |G|$.
 $ \alpha $ heißt Primitivwurzel, wenn $ \alpha $ die Ordnung $p$ hat und
-$ ggT( \alpha, p) = 1 $.\\
-Es sei $ ( Z_p, \cdot \ p ) $ eine prime Restklassengruppe und $ \alpha \in Z_p$.\\
+$ ggT( \alpha, p) = 1 $.\\ \\
+\textbf{Satz}\\
+Es sei $ ( \mathbb{Z}_p, \cdot \ p ) $ eine prime Restklassengruppe und $ \alpha \in \mathbb{Z}_p$.\\
 Weiterhin seien $ p_1 , p_2 , \cdots , p_n $ die Primfaktoren von $G$.\\
 $ \alpha $ ist eine Primitivwurzel, wenn für $ 1 \leq r \leq n $ gilt $ \alpha^{pr} \neq  1 $.
-
-\subsection{Beispiel}
-
-Als Beispiel dient die Primzahl p = 13 und die dazu gehörige prime Restklassengruppe $ G = ({Z} /13 {Z})^\times=\{1,2,\dotsc,12\} $. Zur Primitivwurzel $g = 2$ wird nun die Wertetabelle der diskreten Exponentiation bestimmt.
-
+\paragraph{Beispiel}
+Als selbstgewähltes Beispiel dient die Primzahl p = 13 und die dazu gehörige Gruppe $ G $. Damit sind die Elemente in $G  = \{1,2,\dotsc,12\} $. Zur Primitivwurzel $g = 2$ wird nun die Wertetabelle der diskreten Exponentiation bestimmt.
 \begin{align*}
 	2^0 = 1 & \equiv 1 \bmod 13\\
 	2^1 = 2 & \equiv 2 \bmod 13\\
@@ -52,34 +50,36 @@ Als Beispiel dient die Primzahl p = 13 und die dazu gehörige prime Restklasseng
 	\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
 		$ a$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
 			\hline 
-	    $2^a \equiv mod 11$  &	1 & 2 & 4 & 8 & 3 & 6 & 12 & 11 & 9 & 5 & 10 & 7 \\
+	    $2^a \equiv mod 13$  &	1 & 2 & 4 & 8 & 3 & 6 & 12 & 11 & 9 & 5 & 10 & 7 \\
 	\end{tabular}
 \end{table}
-Wie man sehen kann sind die Potenzen paarweise disjunkt und die gesamte prime Restklassengruppe kann mithilfe den Potenzen von g erstellt werden. Durch vertauschen und sortieren der Tabelle bekommt man die Wertetabelle für den diskreten Logarithmus.
+Wie man sehen kann sind die Potenzen paarweise disjunkt und die gesamte prime Restklassengruppe kann mithilfe der Potenzen von $g$ erstellt werden. Durch vertauschen und sortieren der Tabelle bekommt man die Wertetabelle für den diskreten Logarithmus.
 
 \begin{table}[h!]
 	\centering
 	\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
 	$ x $ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
 	\hline 
-	$\log_2 $ x &	1 & 2 & 5 & 3 & 10 & 6 & 12 & 4 & 9 & 11 & 8 & 7 \\
+	$\log_2 \  x$  &	1 & 2 & 5 & 3 & 10 & 6 & 12 & 4 & 9 & 11 & 8 & 7 \\
 	\end{tabular}
 \end{table}
 
 \subsection{Diskreter Logarithmus Problem}
 
-Voraussetzungen:
+Der diskrete Logarithmus in der Gruppen und Zahlentheorie ist das Gegenstück zum natürlichen Logarithmus in der Analysis. Diskret bedeutet in diesem Fall, dass mit ganzen Zahlen gerechnet wird. Der diskrete Logarithmus ist die Umkehrfunktion zur diskreten Exponentialfunktion.\\
 
-Sei $(G, \cdot \  p)$ eine multiplikative Gruppe, $ \alpha \in G $ ein Element der
-Ordnung n und $\beta \in \left \langle \alpha \right \rangle $ \\
-\\
-\textbf{Problem:}
-\\
-Man berechnet ein $ a $ im Bereich $0 \leq a \leq n - 1 $, so dass
-$ \alpha^a = \beta $ ist. $a$ nennt man den diskreten Logarithmus von $ \beta $ zur Basis $ \alpha $. \\
-Dieses einfach anzumutende Problem ist einer der großen Stützpfeiler, auf die sich unsere Kryptosysteme und Sicherheitssysteme stützen. Die Lösung dieses Problems bedarf im Vergleich zur Diskreten Exponentiation erheblich mehr Rechenaufwand. Die effiziente Lösung des diskreten Logarithmus ist eine Herausforderung der heutigen Mathematik und Kryptologie die uns vermutlich noch eine sehr lange Zeit beschäftigen wird. 
+Ein sehr wichtiger Anwendungsfall tritt zum Beispiel beim Rechnen modulo $p$ auf. Der diskrete Logarithmus zur Basis $a$ ist hier der kleinste Exponent $x$ der Gleichung $a^x \equiv m \mod p$ bei gegebenen natürlichen Zahlen $m$, $a$ und der Primzahl $p$. In unserem vorherigen Beispiel kann man sehen, dass beim Rechnen modulo $13$ der diskrete Logarithmus von $5$ zur Basis $2$ gleich $9$ ist, da $2^9 \equiv 512 \equiv 5 \mod 13$ ist.
 
-\subsection{Kleiner fermatscher Satz}
+Die Berechnung des diskreten Logarithmus ist deutlich schwerer im Vergleich zur Berechnung der diskreten Exponentialfunktion. Diese Eigenschaft macht die diskrete Exponentialfunktion zu perfekten Einwegfunktionen die heutzutage in der Kryptologie Anwendung finden. \\
+\\ 
+\textbf{Definition diskreter Logarithmus}\\
+Sei $(G, \cdot \  p)$ eine multiplikative Gruppe, $ \alpha \in G $ ein Element der Ordnung n und $\beta \in \left \langle \alpha \right \rangle $ \\
+\\
+Man berechnet ein $ a $ im Bereich $0 \leq a \leq n - 1 $, so dass $ \alpha^a = \beta $ ist. $a$ nennt man den diskreten Logarithmus von $ \beta $ zur Basis $ \alpha $. \\
+
+Die Lösung dieses diskreter Logarithmus bedarf im Vergleich zur diskreten Exponentiation erheblich mehr Rechenaufwand. Derzeitige Rechenverfahren die besser als pures Ausprobieren (Brute-Force) sind, kommen trotzdem noch auf einen Rechenaufwand von etwa $\mathcal{O}(\sqrt{n})$, wie der Babystep-Giantstep-Algorithmus den wir auch später noch behandeln werden. Die effiziente Lösung des diskreten Logarithmus ist eine Herausforderung der heutigen Mathematik und Kryptologie die uns hoffentlich noch eine sehr lange Zeit beschäftigen wird. Sollte der diskreter Logarithmus schnell berechenbar sein, so müssen viele Kryptologieverfahren wie zum Beispiel das Elgamal-Verschlüsselungsverfahren gänzlich durch andere Verfahren ersetzt werden.
+
+\subsection{Satz: kleiner Fermat}
 
 Der kleine fermatsche Satz sagt aus, dass bei einer ganzen Zahl $a$ und einer Primzahl $p$ gilt:
  \begin{center}
@@ -92,27 +92,29 @@ Falls $a$ kein Vielfaches von $p$ ist, kann man die Gleichung umformen:
 
 \subsubsection{Beweis des kleinen fermatschen Satzes}
 
-Wir wollen zeigen, dass für eine Primzahl p und eine beliebige ganze Zahl a gilt:  $a^p \equiv a \bmod p$. 
+Wir wollen zeigen, dass für eine Primzahl $p$ und eine beliebige ganze Zahl $a$ gilt:  $a^p \equiv a \bmod p$. 
 Wenn man es umformuliert kann man hiermit auch sagen, dass $a^p - a $ durch $p$ teilbar ist. \\
 \\
-Ist a durch p teilbar, so gilt bereits $ a \equiv 0 \equiv a^p \bmod p$.\\
+Ist $a$ durch $p$ teilbar, so gilt bereits $ a \equiv 0 \equiv a^p \bmod p$.\\4
 Wir beweisen den kleinen fermatschen Satz durch Induktion.\\
 \\
-\textit{Induktionsanfang}:   $ 0^p - 0 = 0 $ und das ist durch p restlos teilbar.\\
-\textit{Induktionsschritt}: Die Behauptung sei wahr für ein bestimmtes a. Somit gilt für a+1: 
+\textit{Induktionsanfang}:   $ 0^p - 0 = 0 $ und das ist durch $p$ restlos teilbar.\\
+\textit{Induktionsschritt}: Die Behauptung sei wahr für ein bestimmtes $a$. Somit gilt für $a+1$: 
 \begin{center}
 	$ (a+1)^p - (a+1) = a^p + { \binom{p}{1}a^{p-1}} + \cdots + { \binom{p}{p-1}a} + 1 - (a+1)$
 \end{center}
-Wobei bei jedem Binominialkoeffizienten gilt, dass
+Hier haben wir $(a+1)^p$ durch den Binomischen Lehrsatz ersetzt:
 \begin{center}
-	$\binom{p}{k} = \frac{p \cdot (p-1) \cdots (p-k+1)}{1 \cdotp 2 \cdots k} $
+	$(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} \cdot b^k, n \in \mathbb{N} $
 \end{center}
-und damit auch dass p mit $ 1 \leq k \leq p-1 $ nur im Zähler auftaucht. Da wir angenommen haben, dass p prim ist, tauchen auch sonst im Nenner keine weiteren Teiler auf. Die Binominialkoeffizienten sind demnach also alle durch p teilbar, da mindestens ein p im Zähler ist. Daraus folgt schließlich:
+Bei jedem der Binominialkoeffizienten gilt, dass
+\begin{center}
+	$\binom{p}{k} = \frac{p \cdot (p-1) \cdots (p-k+1)}{1 \cdot p 2 \cdots k} $
+\end{center}
+ ist und damit auch dass $p$ mit $ 1 \leq k \leq p-1 $ nur im Zähler auftaucht. Da wir angenommen haben, dass $p$ prim, also Teilerfremd, ist, tauchen auch sonst im Nenner keine weiteren Teiler auf. Die Binominialkoeffizienten sind demnach also alle durch $p$ teilbar, da mindestens ein $p$ im Zähler ist. Daraus folgt schließlich:
 \begin{center}
 	$ (a+1)^p - (a+1) \equiv a^p +1 - (a+1) = a^p - a \ \bmod p $
 \end{center}
- und nach der Induktionsvoraussetzung ist dies durch p teilbar.\\
-\\
-Zur Berechnung des Diskreten Logarithmus gibt es noch keine schnellen Algorithmen. Die diskrete Exponentialfunktion hingegen lässt sich in kürzester Zeit sehr einfach berechnen. 
-Dies macht den diskreten Logarithmus zu einer perfekten Einwegfunktion die heute sehr weit in verschiedensten Kryptosystemen im Einsatz ist.\\
-Beispiele hierfür sind das ElGamal-Verschlüsselungsverfahren und das Massey-Omura-Schema, welchen wir uns noch zuwenden werden. Andere Beispiele auf die wir nicht eingehen sind der Diffie-Hellmann-Schlüsselaustausch und der Digitale Signatur Algorithmus.
+ und nach der Induktionsvoraussetzung ist dies durch $p$ teilbar.\\
+
+ \qed

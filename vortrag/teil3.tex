@@ -1,0 +1,105 @@
+
+\subsection{Massey"=Omura"=Schema}
+
+\begin{frame}[c]
+\frametitle{Massey"=Omura"=Schema}
+Überblick:
+\begin{itemize}
+ \item Das Verfahren stammt von den Kryptologen James Massey und Jim Omura
+ \item Es basiert auf dem diskreten Logarithmus"=Problem
+ \item Hauptsächlich zum initialen Tausch von Schlüsseln geeignet
+\end{itemize}
+\bigskip
+
+\pause
+
+\textbf{Besonderheit}:
+Es existiert weder ein öffentlicher noch ein gemeinsamer geheimer Schlüssel.
+\end{frame}
+
+\begin{frame}[c]
+Vorbereitung:
+\begin{itemize}
+ \item Wir betrachten die prime Restklassengruppe $(\mathbb{Z} / p \mathbb{Z})^\times$
+ \item Jeder Teilnehmer $T$ wählt ein beliebiges $e_T$ mit:
+ \begin{center}
+  $e_T < p - 1$ und $ggT(e_T, p-1) = 1$
+ \end{center}
+ \item Bestimme $d_T$ (das multiplikative Inverse) mit:
+ \begin{center}
+ $e_T \cdot d_T \equiv 1 \; mod \; (p - 1)$
+ \end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+Für eine Nachricht $m \in (\mathbb{Z} / p \mathbb{Z})^\times$ gilt nun:
+\begin{align*}
+(m^{e_T})^{d_T} &= m^{e_T \cdot d_T} \\
+&= m^{k \cdot (p-1)+1} \\
+&= m^{k \cdot (p-1)} \cdot m \\
+&= m \; mod \; p \label{satz:fermat} \tag{*}
+\end{align*}
+
+Der Schritt \eqref{satz:fermat} folgt aus dem kleinen Satz von Fermat, da:
+\[
+m^{k \cdot (p-1)} \equiv 1 \; mod \; p
+\]
+\end{frame}
+
+\begin{frame}[c]
+Ablauf:
+\begin{enumerate}
+ \item \textbf{Verschlüsselung Alice:} Alice wählt eine Nachricht $m \in (\mathbb{Z} / p \mathbb{Z})^\times$
+ und berechnet den Geheimtext:
+ \[
+  c_{1} = m^{e_A} \; mod \; p
+ \]
+ \item Alice sendet $c_{1}$ an Bob.
+ 
+ \pause
+
+ \item \textbf{Verschlüsselung Bob:} Bob berechnet den Geheimtext:
+ \[
+  c_{2} = {c_{1}}^{e_B} \; mod \; p
+ \]
+ \item Bob sendet $c_{2}$ an Alice.
+
+ \asuivre
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+\begin{enumerate}
+ \suite
+ \item \textbf{Entschlüsselung Alice:} Alice hebt mit Hilfe von $d_A$ ihre Verschlüsselung auf:
+ \begin{align*}
+  c_{3} &= {c_{2}}^{d_A} \; mod \; p \\
+  \Leftrightarrow c_{3} &= ( (m^{e_A})^{e_B} )^{d_A} \; mod \; p \\
+  \Leftrightarrow c_{3} &= ( (m^{e_A})^{d_A} )^{e_B} \; mod \; p \\
+  \Leftrightarrow c_{3} &= m^{e_B} \; mod \; p
+ \end{align*}
+ \item Alice sendet $c_{3}$ an Bob.
+
+ \asuivre
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+\begin{enumerate}
+ \suite
+ \item \textbf{Entschlüsselung Bob:} Bob entschlüsselt die ursprüngliche Nachricht:
+ \begin{align*}
+  m &= {c_{3}}^{d_B} \; mod \; p \\
+  \Leftrightarrow m &= ( m^{e_B} )^{d_B} \; mod \; p
+ \end{align*}
+\end{enumerate}
+\end{frame}
+
+\section{Ausblick}
+
+\begin{frame}[c]
+\frametitle{Ausblick}
+Peter Shor veröffentlichte 1994 eine Arbeit zum Thema:
+\textit{Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer}
+\end{frame}

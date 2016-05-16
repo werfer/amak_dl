@@ -1,0 +1,210 @@
+
+\section{Motivation}
+\begin{frame}[c]
+Gründe den diskreten Logarithmus näher zu betrachten u.a.:
+\begin{itemize}
+ \item Grundlage einiger asymmetrischer Kryptosysteme
+ \item Alternative zum Faktorisierungsproblem
+ \item Basis einiger Schlüsselaustauschprotokolle
+\end{itemize}
+\end{frame}
+
+\section{Gruppentheorie}
+
+\begin{frame}[c]
+Sei $(\mathbb{G}, \odot)$ eine Gruppe, wir definieren:
+\begin{definition}
+\begin{itemize}
+ \item $e$ bezeichnet das neutrale Element
+ \item $ord(\mathbb{G}) := |\mathbb{G}|$
+ \item Für $\alpha \in \mathbb{G}$ ist $ord(\alpha) = n$ mit $\alpha^n = e$
+\end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}[c]
+\begin{definition}
+Eine Gruppe $\mathbb{G}$ heißt zyklisch, wenn ein $g \in \mathbb{G}$ existiert, so dass: 
+$$
+\forall \alpha \in \mathbb{G} : \exists i \in \mathbb{N} : g^i = \alpha
+$$
+\end{definition}
+Wir nennen $g$ einen Generator der zyklischen Gruppe.
+\end{frame}
+
+\begin{frame}[c]
+\begin{itemize}
+ \item Sei $(\mathbb{G}, \odot)$ eine Gruppe und $\alpha \in \mathbb{G}$.
+ \item $\alpha $ sei von endlicher Ordnung.
+\end{itemize}
+\begin{definition}
+$ \langle \alpha \rangle $ bezeichnet die von $\alpha$ erzeugte Untergruppe.
+\end{definition}
+\end{frame}
+
+\begin{frame}[c]
+Die Euler'sche $\varphi(n)$"=Funktion ist wie folgt definiert:
+\begin{definition}
+Sie gibt für eine natürliche Zahl $n$ an, wie viele zu $n$ teilerfremde natürliche Zahlen existieren,
+welche nicht größer als $n$ sind:
+$$
+\varphi(n) \; := \; \Big| \{a \in \mathbb{N} \, |\, 1 \le a \le n \wedge ggT(a,n) = 1 \} \Big|
+$$
+\end{definition}
+\end{frame}
+
+\subsection{Primitivwurzel}
+\begin{frame}[c]
+Sei $\mathbb{G}$ die prime Restklassengruppe $(\mathbb{Z} /p \mathbb{Z})^\times$
+mit der Multiplikation als vorherrschende Operation (gekennzeichnet durch $\times$).
+\begin{definition}
+Ein Element $\alpha \in \mathbb{G}$ ist eine Primitivwurzel modulo $p$, wenn gilt:
+$$
+ord(\alpha) = \varphi(p)
+$$
+\end{definition}
+\end{frame}
+
+\subsection{Kleiner fermatscher Satz}
+\begin{frame}[c]
+\begin{block}{Satz (Fermat)}
+Sei $p$ eine Primzahl. Für jede nicht durch $p$ teilbare ganze Zahl $a$ gilt:
+\[
+ a^{p-1} \equiv 1 \; mod \; p
+\]
+\end{block}
+\end{frame}
+
+\subsection{Diskretes Logarithmus"=Problem}
+
+\begin{frame}[c]
+Nachfolgend sei $(\mathbb{G}, \odot)$ eine zyklische Gruppe mit Erzeuger $g$ und $n := ord( \mathbb{G} )$.
+
+\begin{definition}
+Die diskrete Exponentialfunktion ist gegeben durch:
+\begin{align*}
+exp_g: (\mathbb{Z} / n \mathbb{Z}, +) &\to \mathbb{G} \\
+k &\mapsto g^k \in \mathbb{G}
+\end{align*}
+\end{definition}
+\end{frame}
+
+
+\begin{frame}[c]
+\begin{definition}
+Der diskrete Logarithmus bestimmt das Urbild von $exp_g$:
+\begin{align*}
+log_g: \mathbb{G} &\to (\mathbb{Z} / n \mathbb{Z}, +) \\
+x &\mapsto log_g(x), \; mit \; exp_g(log_g(x)) = x
+\end{align*}
+\end{definition}
+
+\pause
+
+\begin{exampleblock}{Beispiel}
+Sei $\mathbb{G} = (\mathbb{Z} / 13 \mathbb{Z})^\times$ und $g = 2$ eine Primitivwurzel modulo 13:
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+$x$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\hline
+$\log_2 \ x$ & 0 & 1 & 4 & 2 & 9 & 5 & 11 & 3 & 8 & 10 & 7 & 6 \\
+\end{tabular}
+\end{table}
+\end{exampleblock}
+\end{frame}
+
+\begin{comment}
+\begin{frame}[c]
+\begin{figure}[htbp]
+\centering
+\def\svgscale{0.1}
+\includesvg{plot}
+\end{figure}
+\end{frame}
+\end{comment}
+
+\subsection{Logarithmusgesetze}
+
+\begin{frame}[c]
+Die Logarithmusgesetze gelten auch für den diskreten Logarithmus.
+
+\begin{block}{Satz}
+Sei $(\mathbb{G}, \odot)$ eine zyklische Gruppe, $g \in \mathbb{G}, k \in \mathbb{Z}$ und $x, y \in \langle g \rangle$,
+dann gilt:
+\begin{itemize}
+ \item $log_g(x \odot y) = log_g(x) + log_g(y)$
+ \item $log_g(x^k) = k \cdot log_g(x)$
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\section[Algorithmen]{Algorithmen zur Bestimmung des diskreten Logarithmus}
+
+\subsection{Index"=Calculus}
+
+\begin{frame}[c]
+\frametitle{Index"=Calculus}
+
+\begin{tabbing}
+\textbf{Eingabe:}~~ \=Eine multiplikative Gruppe $(\mathbb{Z} /p \mathbb{Z})^\times$,\\
+\>ein Generator $g$ und ein $\alpha \in (\mathbb{Z} /p \mathbb{Z})^\times$.\\
+\textbf{Ausgabe:} \>Der diskrete Logarithmus $x = log_g(\alpha)$
+\end{tabbing}
+
+\textbf{Der Algorithmus teil sich in zwei Phasen:}
+\begin{enumerate}
+ \item Sammeln von Relationen und lösen eines GLS
+ \item Berechnung des diskreten Logarithmus für $\alpha$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+\textbf{Phase 1:}
+
+\begin{enumerate}
+ \item Bestimme die Menge $B = \{ p_1, ..., p_k \}$ aller Primzahlen bis $p_k$ mit $p_k < p$.
+ \item Wähle $l \geq k$ zufällige ${x_1, ..., x_l} \in (\mathbb{Z} / (p-1) \mathbb{Z}, +)$ mit:
+    \begin{itemize}
+     \item $x_i$ und $x_j$ paarweise verschieden für alle $i, j \in \{ 1, ..., l \}$ und
+     \item $g^{x_i} \; mod \; p$ ist mit $B$ faktorisierbar
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+Wir erhalten $l$ Gleichungen:
+\begin{align*}
+  g^{x_1} &= \displaystyle\prod_{i=1}^{k} p_i^{e_{1,i}} \; mod \; p \\
+  & \vdotswithin{=} \\
+  g^{x_l} &= \displaystyle\prod_{i=1}^{k} p_i^{e_{l,i}} \; mod \; p
+\end{align*}
+\end{frame}
+
+\begin{frame}[c]
+Logarithmieren liefert uns lineare Gleichungen:
+\begin{align*}
+  x_1 &= \displaystyle\sum_{i=1}^{k} e_{1,i} \cdot log_g \, p_i \; mod \; (p - 1) \\
+  & \vdotswithin{=} \\
+  x_l &= \displaystyle\sum_{i=1}^{k} e_{l,i} \cdot log_g \, p_i \; mod \; (p - 1)
+\end{align*}
+\end{frame}
+
+\begin{frame}[c]
+\textbf{Phase 2:}
+
+\begin{enumerate}
+ \item Wähle ein zufälliges $x \in (\mathbb{Z} / (p-1) \mathbb{Z}, +)$, sodass:
+ $g^{x_i} \; mod \; p$ mit $B$ faktorisierbar ist.
+ \item Mit Hilfe der $l + 1$ Gleichungen werden die $log_g \, p_i$ für $i \in \{ 1, ..., k \}$ und $log_g \, \alpha$ bestimmt.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+Es gilt:
+\begin{align*}
+  g^x \cdot \alpha &= \displaystyle\prod_{i=1}^{k} p_i^{e_i} \; mod \; p \\
+  \implies log_g \, \alpha &= -x + \displaystyle\sum_{i=1}^{k} e_{i} \cdot log_g \, p_i \; mod \; (p - 1)
+\end{align*}
+\end{frame}

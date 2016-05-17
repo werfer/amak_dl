@@ -203,7 +203,7 @@ Logarithmieren liefert uns lineare Gleichungen:
 
 \begin{enumerate}
  \item Wähle ein zufälliges $x \in (\mathbb{Z} / (p-1) \mathbb{Z}, +)$, sodass:
- $g^{x_i} \; mod \; p$ mit $B$ faktorisierbar ist.
+ $g^{x} \; mod \; p$ mit $B$ faktorisierbar ist.
  \item Mit Hilfe der $l + 1$ Gleichungen werden die $log_g \, p_i$ für $i \in \{ 1, ..., k \}$ und $log_g \, \alpha$ bestimmt.
 \end{enumerate}
 \end{frame}
@@ -211,7 +211,7 @@ Logarithmieren liefert uns lineare Gleichungen:
 \begin{frame}[c]
 Es gilt:
 \begin{align*}
-  g^x \cdot \alpha &= \displaystyle\prod_{i=1}^{k} p_i^{e_i} \; mod \; p \\
+  g^x \odot \alpha &= \displaystyle\prod_{i=1}^{k} p_i^{e_i} \; mod \; p \\
   \implies log_g \, \alpha &= -x + \displaystyle\sum_{i=1}^{k} e_{i} \cdot log_g \, p_i \; mod \; (p - 1)
 \end{align*}
 \end{frame}

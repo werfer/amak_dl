@@ -56,7 +56,7 @@
 	\frametitle{Beispiel}
 	\begin{itemize}
 		\item Wir nehmen eine Gruppe $ G $ der Ordnung $n = 29$ mit Erzeuger $g = 11$ 
-		\item Wir wollen den diskreten Logarithmus von $a = 3$ zur Basis g berechnen, also die Lösung von $3 = 11^x \bmod 29$
+		\item Wir wollen den diskreten Logarithmus von $ \alpha = 3$ zur Basis g berechnen, also die Lösung von $3 = 11^x \bmod 29$
 		\item Rechnung siehe Tafel \pause
 		\item Lösung:   $log_{11} 3 = 2 \cdot 6 + 5 = 17$
 	\end{itemize} 
@@ -98,10 +98,10 @@
 	\frametitle{Vorbereitungen}
 	Der Empfänger
 	\begin{enumerate}
-		\item wählt eine endliche, zyklische Gruppe $G$ der Ordnung $n$ mit Erzeuger $p$ 
+		\item wählt eine endliche, zyklische Gruppe $G$ der Ordnung $n$ mit Erzeuger $g$ 
 		\item wählt eine zufällige Zahl $a \in \{1,\ldots,n-1\} \ mit \ ggT(a,n)=1$ als privater Schlüssel des Empfängers
-		\item berechnet das Gruppenelement $A = p^a \ \in \ G$ als öffentlicher Schlüssel 
-		\item veröffentlicht $(G,p)$ und $A$ 
+		\item berechnet das Gruppenelement $A = g^a \ \in \ G$ als öffentlicher Schlüssel 
+		\item veröffentlicht $(G,g)$ und $A$ 
 	\end{enumerate}
 \end{frame}
 
@@ -112,8 +112,8 @@
 	\begin{enumerate}
 		\item möchte Nachricht $m \in G$ versenden 
 		\item wählt $r \in \{1,\ldots,n-1 \} \ mit \ ggT(r,n) = 1$ 
-		\item berechnet $R = p^r \in G$  
-		\item berechnet $c = A^r \cdot n \in G $ 
+		\item berechnet $R = g^r \in G$  
+		\item berechnet $c = A^r \cdot m \in G $ 
 		\item sendet (R,c) an den Empfänger
 	\end{enumerate}
 \end{frame}
@@ -125,7 +125,7 @@
 	\begin{itemize}
 		\item berechnet  $ m = \ R^{-a} \cdot c  \in G$ 
 	\end{itemize}\pause 
-	Es gilt: $R^{-a} \cdot c = p^{-ra} \cdot A^r \cdot m  = p^{-ra} \cdot p^{ar} \cdot m = m$
+	Es gilt: $R^{-a} \cdot c = g^{-ra} \cdot A^r \cdot m  = g^{-ra} \cdot g^{ar} \cdot m = m$
 \end{frame}
 
 \subsubsection{Beispiel}
